@@ -8,118 +8,187 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#0d0a1a;color:#f8f8f2;font-family:system-ui,-apple-system,sans-serif;overflow-x:hidden}
-.card{background:rgba(23,18,43,.82);border:1px solid rgba(255,121,198,.3);border-radius:1.25rem;box-shadow:0 12px 35px #0005}
-.gradient{background:linear-gradient(120deg,#ff79c6,#bd93f9,#8be9fd);-webkit-background-clip:text;background-clip:text;color:transparent}
-.btn{border:0;border-radius:.8rem;padding:.75rem 1rem;font-weight:750;cursor:pointer;transition:.2s}
-.btn:hover{filter:brightness(1.12);transform:translateY(-1px)}.pink{background:linear-gradient(90deg,#ec4899,#8b5cf6);color:white}.cyan{background:linear-gradient(90deg,#22d3ee,#3b82f6);color:#07111f}.green{background:linear-gradient(90deg,#34d399,#2dd4bf);color:#06251d}
+:root{color-scheme:dark;--pink:#ff79c6;--purple:#bd93f9;--cyan:#8be9fd}
+*{box-sizing:border-box}
+body{margin:0;background:#0d0a1a;color:#f8f8f2;font-family:system-ui,-apple-system,sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:-30%;z-index:-1;pointer-events:none;background:radial-gradient(circle at 18% 20%,#9d4edd22,transparent 30%),radial-gradient(circle at 82% 60%,#ec489922,transparent 32%);animation:ambient 16s ease-in-out infinite alternate}
+.card{background:rgba(23,18,43,.86);border:1px solid rgba(255,121,198,.3);border-radius:1.25rem;box-shadow:0 12px 35px #0005;backdrop-filter:blur(10px)}
+.gradient{background:linear-gradient(120deg,#ff79c6,#bd93f9,#8be9fd);background-size:200% 200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:gradientShift 7s ease infinite}
+.btn{border:0;border-radius:.8rem;padding:.75rem 1rem;font-weight:750;cursor:pointer;transition:transform .2s,filter .2s,box-shadow .2s}
+.btn:hover{filter:brightness(1.12);transform:translateY(-2px);box-shadow:0 8px 22px #0004}
+.btn:active{transform:translateY(0) scale(.98)}
+.btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.pink{background:linear-gradient(90deg,#ec4899,#8b5cf6);color:white}
+.cyan{background:linear-gradient(90deg,#22d3ee,#3b82f6);color:#07111f}
+.green{background:linear-gradient(90deg,#34d399,#2dd4bf);color:#06251d}
 .field{width:100%;padding:.8rem;border-radius:.75rem;background:#080714;border:1px solid #7650a055;color:white}
-.field:focus{outline:2px solid #f472b6;outline-offset:1px}.muted{color:#c4b5fd}
-.option{display:flex;align-items:center;gap:.8rem;padding:1rem;border:1px solid #7650a055;border-radius:.85rem;background:#080714;cursor:pointer}
+.field:focus{outline:2px solid #f472b6;outline-offset:1px}
+.muted{color:#c4b5fd}
+.option{display:flex;align-items:center;gap:.8rem;padding:1rem;border:1px solid #7650a055;border-radius:.85rem;background:#080714;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}
+.option:hover{border-color:#f472b6;transform:translateX(3px)}
 .option:has(input:checked){border-color:#f472b6;background:#ec489922}
 .hidden{display:none!important}
+.reveal{animation:riseIn .65s both}
+.float{animation:float 5s ease-in-out infinite}
+.pulse-glow{animation:pulseGlow 3s ease-in-out infinite}
+.question-enter{animation:questionIn .3s ease both}
+@keyframes riseIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes questionIn{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:translateX(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@keyframes ambient{from{transform:translate3d(-1%,0,0) scale(1)}to{transform:translate3d(2%,1%,0) scale(1.08)}}
+@keyframes gradientShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 0 0 #ec489922}50%{box-shadow:0 0 28px 2px #ec489944}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
-
 <body>
 <header class="sticky top-0 z-20 border-b border-pink-500/20 bg-slate-950/95 backdrop-blur">
  <div class="max-w-6xl mx-auto p-3 flex flex-wrap gap-3 justify-between items-center">
   <div class="flex items-center gap-3">
-   <div class="w-12 h-12 rounded-xl border border-pink-400 grid place-items-center text-pink-300 font-black">KTS</div>
+   <img src="https://i.ibb.co/CKK6Rn1N/1000166421-2.jpg" alt="KTS logo" class="w-12 h-12 rounded-xl object-cover border border-pink-400 float">
    <div><div class="font-black tracking-wide gradient">KAROONJHAR TESTING SERVICE</div><div class="text-xs text-pink-200">Sindh University Entry Mock Test 2026</div></div>
   </div>
-  <nav class="flex flex-wrap gap-2">
-   <button class="btn pink text-sm" onclick="showTab('register')">Student Registration</button>
-   <button class="btn cyan text-sm" onclick="showTab('exam')">Practice Exam</button>
-   <button class="btn cyan text-sm" onclick="showTab('admin')">Organizer Login</button>
+  <nav class="flex flex-wrap gap-2" aria-label="Main navigation">
+   <button class="btn pink text-sm" onclick="showTab('register')"><i class="fa-solid fa-user-plus mr-1"></i> Register</button>
+   <button class="btn cyan text-sm" onclick="showTab('exam')"><i class="fa-solid fa-file-pen mr-1"></i> Practice Exam</button>
+   <button class="btn text-sm border border-pink-400/50 text-pink-200" onclick="showTab('admin')"><i class="fa-solid fa-lock mr-1"></i> Organizer</button>
   </nav>
  </div>
 </header>
-<main class="max-w-4xl mx-auto p-4 space-y-6">
- <section class="card p-6 md:p-9 text-center">
-  <p class="text-pink-300 text-xs uppercase tracking-widest font-bold mb-3">Registration and payment review</p>
-  <h1 class="text-3xl md:text-5xl font-black gradient mb-4">KTS Mock Test</h1>
-  <p class="text-slate-300">Submit your registration details. Your request remains pending until the organizer verifies payment and approves it.</p>
-  <p class="mt-4 text-sm text-amber-200">Do not submit real student details until the organizer completes the security setup and confirms this page is ready.</p>
- </section>
 
- <section id="tab-register" class="card p-6">
-  <h2 class="text-2xl font-bold mb-2">Student Registration</h2>
-  <p class="text-sm text-slate-300 mb-5">Enter accurate details. Never enter your Easypaisa PIN, password, or OTP.</p>
-  <form id="regForm" class="space-y-4">
-   <div><label class="block text-sm mb-1" for="studentName">Full name</label><input class="field" id="studentName" maxlength="100" required autocomplete="name"></div>
-   <div><label class="block text-sm mb-1" for="studentPhone">Phone number</label><input class="field" id="studentPhone" maxlength="20" required inputmode="tel" autocomplete="tel" placeholder="03xxxxxxxxx"></div>
-   <div><label class="block text-sm mb-1" for="studentTxID">Easypaisa transaction ID</label><input class="field" id="studentTxID" maxlength="100" required></div>
-   <button class="btn pink w-full" id="submitBtn" type="submit">Submit Registration</button>
-  </form>
-  <p id="regMessage" class="mt-4 text-sm" role="status"></p>
- </section>
-
- <section id="tab-exam" class="card p-6 hidden">
-  <h2 class="text-2xl font-bold mb-2">KTS Practice Exam</h2>
-  <p class="text-sm text-amber-200 mb-4">Practice/demo mode: questions and answer checking run in the browser. This is not secure for a paid or high-stakes exam. The timer is 100 minutes; question bank supports up to 100 questions in the organizer interface.</p>
-  <div id="examStartArea">
-   <p class="text-slate-300 mb-4">Start when ready. Your score appears at the end. This demo does not securely save attempts or verify registration approval.</p>
-   <button id="startExamBtn" class="btn pink">Start Practice Exam</button>
+<main class="max-w-6xl mx-auto p-4 space-y-7">
+ <section class="card p-6 md:p-9 text-center reveal pulse-glow">
+  <p class="text-pink-300 text-xs uppercase tracking-widest font-bold mb-3">Official KTS Mock Examination</p>
+  <h1 class="text-3xl md:text-5xl font-black mb-3 gradient">SINDH UNIVERSITY MOCK TEST</h1>
+  <p class="font-bold mb-6 text-purple-200">Learn, Prepare, Succeed • Own Your Future</p>
+  <p class="text-sm muted mb-4">Scheduled: <strong class="text-pink-300">02 October 2026, 11:00 AM Pakistan time</strong></p>
+  <div id="countdown" class="grid grid-cols-4 gap-2 max-w-lg mx-auto mb-6">
+   <div class="bg-slate-950 p-3 rounded-xl"><b id="days" class="text-2xl text-pink-300">--</b><div class="text-xs">Days</div></div>
+   <div class="bg-slate-950 p-3 rounded-xl"><b id="hours" class="text-2xl text-purple-300">--</b><div class="text-xs">Hours</div></div>
+   <div class="bg-slate-950 p-3 rounded-xl"><b id="minutes" class="text-2xl text-cyan-300">--</b><div class="text-xs">Minutes</div></div>
+   <div class="bg-slate-950 p-3 rounded-xl"><b id="seconds" class="text-2xl text-emerald-300">--</b><div class="text-xs">Seconds</div></div>
   </div>
-  <div id="examArea" class="hidden">
-   <div class="flex flex-wrap justify-between gap-3 mb-4"><span id="examProgress" class="font-bold"></span><span id="examTimer" class="font-bold text-amber-200">100:00</span></div>
-   <div id="examQuestion" class="text-lg font-semibold mb-4"></div>
-   <div id="examOptions" class="space-y-3"></div>
-   <div class="flex flex-wrap justify-between gap-3 mt-5">
-    <button id="prevQuestionBtn" class="btn border border-pink-400/40">Previous</button>
-    <button id="nextQuestionBtn" class="btn cyan">Next</button>
-    <button id="finishExamBtn" class="btn green">Finish Exam</button>
-   </div>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-left">
+   <div class="bg-slate-950/70 rounded-xl p-3"><small class="text-pink-300">Question bank</small><div class="font-bold">Up to 100 MCQs</div></div>
+   <div class="bg-slate-950/70 rounded-xl p-3"><small class="text-purple-300">Practice duration</small><div class="font-bold">100 minutes</div></div>
+   <div class="bg-slate-950/70 rounded-xl p-3"><small class="text-cyan-300">Registration fee</small><div class="font-bold">Rs. 200/-</div></div>
+   <div class="bg-slate-950/70 rounded-xl p-3"><small class="text-emerald-300">Payment</small><div class="font-bold">Easypaisa</div></div>
   </div>
-  <div id="examResult" class="hidden mt-5 rounded-xl border border-emerald-400/30 p-4"></div>
  </section>
 
- <section id="tab-admin" class="card p-6 hidden">
-  <h2 class="text-2xl font-bold mb-2">Organizer Login</h2>
-  <p class="text-sm text-slate-300 mb-4">Sign in using the organizer account already created in Firebase Authentication.</p>
-  <form id="loginForm" class="space-y-3">
-   <input class="field" id="adminEmail" type="email" autocomplete="username" placeholder="Organizer email" required>
-   <input class="field" id="adminPassword" type="password" autocomplete="current-password" placeholder="Password" required>
-   <button class="btn cyan w-full" type="submit">Sign in</button>
-  </form>
-  <p id="loginMessage" class="mt-3 text-sm" role="status"></p>
-  <div id="adminArea" class="hidden mt-6">
-   <div class="flex flex-wrap justify-between gap-3 items-center mb-3">
-    <div><h3 class="font-bold text-xl">Registration requests</h3><p id="uidInfo" class="text-xs text-slate-400 break-all"></p></div>
-    <button id="logoutBtn" class="btn text-sm border border-pink-400/50">Sign out</button>
-   </div>
-   <p class="text-sm text-amber-200 mb-4">If requests do not load, Firestore rules may still be locked. Follow the included setup instructions and authorize this exact admin UID.</p>
-   <button id="refreshBtn" class="btn cyan text-sm mb-4">Refresh requests</button>
-   <div id="requestList" class="space-y-3"></div>
-   <hr class="my-6 border-pink-400/20">
-   <h3 class="font-bold text-xl mb-2">Question Bank Editor</h3>
-   <p class="text-sm text-amber-200 mb-4">Add/edit/delete up to 100 questions using this page. Questions are publicly readable in this practice version, so do not use it for secure/high-stakes testing.</p>
-   <form id="questionForm" class="space-y-3 rounded-xl border border-pink-400/20 p-4">
-    <input id="questionId" type="hidden">
-    <label class="block text-sm">Question<textarea id="questionText" class="field mt-1" rows="3" maxlength="1000" required></textarea></label>
-    <label class="block text-sm">Four options (one per line)<textarea id="questionOptions" class="field mt-1" rows="5" required placeholder="Option A&#10;Option B&#10;Option C&#10;Option D"></textarea></label>
-    <label class="block text-sm">Correct option
-     <select id="questionAnswer" class="field mt-1"><option value="0">Option A</option><option value="1">Option B</option><option value="2">Option C</option><option value="3">Option D</option></select>
-    </label>
-    <div class="flex flex-wrap gap-2"><button id="saveQuestionBtn" class="btn pink" type="submit">Save Question</button><button id="cancelQuestionBtn" class="btn border border-pink-400/40" type="button">Clear Form</button></div>
-    <p id="questionMessage" class="text-sm" role="status"></p>
+ <section id="tab-register" class="grid md:grid-cols-2 gap-6">
+  <div class="card p-6 reveal">
+   <h2 class="text-xl font-bold text-pink-300 mb-4"><i class="fa-solid fa-user-pen mr-2"></i>Student Registration</h2>
+   <p class="text-sm muted mb-4">Submit your details and transaction ID. Registration remains pending until the organizer reviews it. Never enter your PIN, password, or OTP.</p>
+   <form id="regForm" class="space-y-4">
+    <label class="block text-sm">Full name *<input id="studentName" class="field mt-1" required maxlength="100" autocomplete="name" placeholder="Enter full name"></label>
+    <label class="block text-sm">WhatsApp number *<input id="studentPhone" class="field mt-1" required type="tel" maxlength="20" autocomplete="tel" placeholder="03XXXXXXXXX"></label>
+    <label class="block text-sm">Easypaisa TxID *<input id="studentTxID" class="field mt-1" required maxlength="100" placeholder="Enter transaction ID"></label>
+    <div class="rounded-xl bg-emerald-950/50 border border-emerald-400/30 p-4 text-sm">
+     <strong class="text-emerald-300">Payment instructions</strong><p>Send Rs. 200/- via Easypaisa to account ending 6415. Confirm account title and number with the organizer before sending.</p>
+    </div>
+    <button class="btn pink w-full" id="submitBtn" type="submit">Submit Registration</button>
    </form>
-   <div class="flex justify-between items-center mt-4 gap-3"><h4 class="font-semibold">Saved questions</h4><button id="refreshQuestionsBtn" class="btn cyan text-sm" type="button">Refresh</button></div>
-   <p id="questionCount" class="text-sm muted mt-2"></p>
-   <div id="questionList" class="space-y-3 mt-3"></div>
+   <div id="registrationResult" class="hidden mt-4 rounded-xl border border-emerald-400/40 bg-emerald-950/40 p-4" role="status" aria-live="polite"></div>
+  </div>
+  <div class="space-y-6">
+   <div class="card p-6 reveal"><h2 class="text-xl font-bold text-purple-300 mb-3">Syllabus Breakdown</h2>
+    <ul class="space-y-2 text-sm">
+     <li class="flex justify-between bg-slate-950/70 p-3 rounded-lg"><span>English</span><b>20 MCQs</b></li>
+     <li class="flex justify-between bg-slate-950/70 p-3 rounded-lg"><span>Mathematics</span><b>10 MCQs</b></li>
+     <li class="flex justify-between bg-slate-950/70 p-3 rounded-lg"><span>Computer Science</span><b>10 MCQs</b></li>
+     <li class="flex justify-between bg-slate-950/70 p-3 rounded-lg"><span>Current Affairs</span><b>40 MCQs</b></li>
+     <li class="flex justify-between bg-slate-950/70 p-3 rounded-lg"><span>General Awareness</span><b>20 MCQs</b></li>
+    </ul>
+    <p class="text-xs muted mt-3">The syllabus distribution is the intended exam plan. The practice exam loads up to 100 organizer-added questions; sample questions appear if the bank is empty.</p>
+   </div>
+   <div class="card p-6 reveal"><h2 class="text-lg font-bold text-cyan-300 mb-2">Contact</h2>
+    <p class="text-sm">Organizer: Kelash Ankhia</p><p class="text-sm">Tech Lead: Aneel Kumar</p>
+    <p class="text-sm mt-2"><a class="text-emerald-300 underline" href="https://wa.me/923483553420" target="_blank" rel="noopener noreferrer">Technical support on WhatsApp</a></p>
+    <p class="text-sm mt-2"><a class="text-emerald-300 underline" href="https://chat.whatsapp.com/IwYFilxURxk8kbjKyPgFra" target="_blank" rel="noopener noreferrer">Join KTS WhatsApp group</a></p>
+   </div>
+   <div class="card p-6 reveal"><h2 class="font-bold text-pink-300 mb-2">Frequently Asked Questions</h2>
+    <p class="font-semibold text-sm">How is registration confirmed?</p><p class="text-sm muted mb-3">The organizer reviews the submitted transaction ID and manually approves or rejects the request.</p>
+    <p class="font-semibold text-sm">Is this a secure official exam?</p><p class="text-sm muted">This site currently provides practice functionality. It does not securely verify payment, restrict exam access to approved students, or store verified exam results.</p>
+   </div>
   </div>
  </section>
- <section class="card p-5">
-  <h3 class="font-bold mb-2">Important exam limitation</h3>
-  <p class="text-sm text-slate-300">This version includes a practice exam and organizer question editor. Since answer checking happens in the student's browser, the answer key can be inspected. Registration approval is not yet linked to exam access, and results are not securely stored.</p>
+
+ <section id="tab-exam" class="hidden space-y-5">
+  <div id="examLogin" class="card p-6 max-w-2xl mx-auto reveal">
+   <h2 class="text-2xl font-black text-pink-300 mb-2">KTS Practice Exam</h2>
+   <p class="text-sm muted mb-4">Practice mode: up to 100 questions and a 100-minute timer. This is not a secure or proctored exam; answer keys are accessible in the public practice question data.</p>
+   <button class="btn pink" id="startExamBtn"><i class="fa-solid fa-play mr-2"></i>Start Practice Exam</button>
+  </div>
+  <div id="activeExam" class="hidden card p-5 md:p-8 reveal">
+   <div class="flex flex-wrap justify-between gap-3 border-b border-pink-400/20 pb-4 mb-5">
+    <div><p class="text-xs text-pink-300">KTS PRACTICE EXAM</p><h2 class="text-xl font-bold">Mock Test</h2></div>
+    <div class="text-right"><p class="text-xs muted">Time remaining</p><strong id="examTimer" class="text-2xl text-pink-300">100:00</strong></div>
+   </div>
+   <div class="flex justify-between gap-2 text-sm mb-4"><b id="questionProgress">Question 1</b><span id="categoryTag" class="text-cyan-300">Practice</span></div>
+   <div id="questionText" class="text-lg font-semibold mb-5 question-enter"></div>
+   <div id="optionsContainer" class="space-y-3"></div>
+   <div class="flex flex-wrap justify-between gap-3 mt-7 border-t border-pink-400/20 pt-4">
+    <button id="prevBtn" class="btn border border-pink-400/40 text-pink-200">Previous</button>
+    <button id="nextBtn" class="btn pink">Next</button>
+    <button id="submitBtn" class="btn green">Finish Exam</button>
+   </div>
+   <p id="examNotice" class="text-xs muted mt-4" aria-live="polite"></p>
+  </div>
+  <div id="examSubmitted" class="hidden card p-8 text-center max-w-lg mx-auto reveal">
+   <h2 class="text-2xl font-black text-emerald-300">Practice completed</h2>
+   <p id="scoreText" class="my-3"></p>
+   <p class="text-sm muted">This score is displayed in this browser only; it is not a verified result or sent to the organizer.</p>
+   <button class="btn pink mt-4" onclick="showTab('register')">Back to KTS home</button>
+  </div>
+ </section>
+
+ <section id="tab-admin" class="hidden space-y-5">
+  <div class="card p-6 max-w-3xl mx-auto reveal">
+   <h2 class="text-2xl font-black text-pink-300 mb-2"><i class="fa-solid fa-shield-halved mr-2"></i>Organizer Portal</h2>
+   <p class="text-sm muted mb-4">Sign in with the organizer account. Management controls appear only after the authorized organizer account is verified.</p>
+   <form id="loginForm" class="space-y-3">
+    <input class="field" id="adminEmail" type="email" autocomplete="username" placeholder="Organizer email" required>
+    <input class="field" id="adminPassword" type="password" autocomplete="current-password" placeholder="Password" required>
+    <button class="btn cyan w-full" id="loginBtn" type="submit">Organizer Sign in</button>
+   </form>
+   <p id="loginMessage" class="mt-3 text-sm" role="status"></p>
+   <div id="adminArea" class="hidden mt-6">
+    <div class="flex flex-wrap justify-between items-center gap-3 mb-4">
+     <div><h3 class="text-xl font-bold">Organizer Dashboard</h3><p id="uidInfo" class="text-xs text-slate-400 break-all"></p></div>
+     <button id="logoutBtn" class="btn border border-pink-400/50 text-pink-200">Sign out</button>
+    </div>
+    <div class="card p-4 mb-6">
+     <div class="flex flex-wrap justify-between items-center gap-3 mb-3"><h3 class="font-bold text-lg">Registration requests</h3><button id="refreshBtn" class="btn cyan text-sm">Refresh</button></div>
+     <div id="requestList" class="space-y-3"></div>
+    </div>
+    <div class="card p-4">
+     <h3 class="font-bold text-lg mb-2">Question Bank Editor</h3>
+     <p class="text-xs text-amber-200 mb-4">Add, edit, or delete up to 100 practice questions. The answer key is visible to visitors in this practice version.</p>
+     <form id="questionForm" class="space-y-3 rounded-xl border border-pink-400/20 p-4">
+      <input id="questionId" type="hidden">
+      <label class="block text-sm">Question<textarea id="questionTextInput" class="field mt-1" rows="3" maxlength="1000" required></textarea></label>
+      <label class="block text-sm">Four options (one per line)<textarea id="questionOptions" class="field mt-1" rows="5" required placeholder="Option A&#10;Option B&#10;Option C&#10;Option D"></textarea></label>
+      <label class="block text-sm">Correct option<select id="questionAnswer" class="field mt-1"><option value="0">Option A</option><option value="1">Option B</option><option value="2">Option C</option><option value="3">Option D</option></select></label>
+      <div class="flex flex-wrap gap-2"><button id="saveQuestionBtn" class="btn pink" type="submit">Save Question</button><button id="cancelQuestionBtn" class="btn border border-pink-400/40" type="button">Clear Form</button></div>
+      <p id="questionMessage" class="text-sm" role="status"></p>
+     </form>
+     <div class="flex justify-between items-center mt-4 gap-3"><h4 class="font-semibold">Saved questions</h4><button id="refreshQuestionsBtn" class="btn cyan text-sm" type="button">Refresh</button></div>
+     <p id="questionCount" class="text-sm muted mt-2"></p>
+     <div id="questionList" class="space-y-3 mt-3"></div>
+    </div>
+   </div>
+  </div>
  </section>
 </main>
+<footer class="border-t border-pink-500/20 bg-slate-950 p-5 text-center text-xs text-pink-200/70 mt-8">© 2026 Karoonjhar Testing Service. Platform designed by Aneel Kumar.</footer>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
+"use strict";
+const ORGANIZER_UID = "24DwmgICVoS4pfMxt6DWqli1tVq2";
 const firebaseConfig = {
   apiKey: "AIzaSyCrzkgAWOPaoxkPRirZbW8xwVC70UNxToY",
   authDomain: "kts-mock-test.firebaseapp.com",
@@ -131,114 +200,186 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
-
-function showTab(tab) {
- document.getElementById("tab-register").classList.toggle("hidden", tab !== "register");
- document.getElementById("tab-admin").classList.toggle("hidden", tab !== "admin");
- document.getElementById("tab-exam").classList.toggle("hidden", tab !== "exam");
- window.scrollTo({top:0, behavior:"smooth"});
-}
-function message(id, text, isError=false) {
- const el=document.getElementById(id); el.textContent=text;
- el.className="mt-3 text-sm "+(isError?"text-rose-300":"text-emerald-300");
-}
-document.getElementById("regForm").addEventListener("submit", async (e)=>{
- e.preventDefault();
- const btn=document.getElementById("submitBtn"); btn.disabled=true;
- const name=document.getElementById("studentName").value.trim();
- const phone=document.getElementById("studentPhone").value.trim();
- const txid=document.getElementById("studentTxID").value.trim();
- try {
-  await db.collection("registrations").add({
-   name, phone, txid, status:"pending", createdAt:firebase.firestore.FieldValue.serverTimestamp()
-  });
-  message("regMessage","Registration submitted. Keep your transaction receipt; approval is manual.");
-  e.target.reset();
- } catch(err) {
-  message("regMessage","Could not submit: "+err.message+" (Organizer: check Firestore rules/setup.)",true);
- } finally { btn.disabled=false; }
-});
-document.getElementById("loginForm").addEventListener("submit", async (e)=>{
- e.preventDefault();
- try {
-  await auth.signInWithEmailAndPassword(
-   document.getElementById("adminEmail").value.trim(),
-   document.getElementById("adminPassword").value
-  );
-  message("loginMessage","Signed in.");
-  await loadRequests();
- } catch(err) { message("loginMessage","Sign-in failed: "+err.message,true); }
-});
-document.getElementById("logoutBtn").addEventListener("click", async ()=>{
- await auth.signOut();
- document.getElementById("adminArea").classList.add("hidden");
- message("loginMessage","Signed out.");
-});
-document.getElementById("refreshBtn").addEventListener("click",loadRequests);
-auth.onAuthStateChanged(user=>{
- if(user) {
-  document.getElementById("adminArea").classList.remove("hidden");
-  document.getElementById("uidInfo").textContent="Signed-in UID: "+user.uid;
-  loadQuestions();
- } else document.getElementById("adminArea").classList.add("hidden");
-});
-async function loadRequests() {
- const user=auth.currentUser; if(!user) return;
- const list=document.getElementById("requestList");
- list.textContent="Loading…";
- try {
-  const snap=await db.collection("registrations").orderBy("createdAt","desc").get();
-  list.innerHTML="";
-  if(snap.empty){list.textContent="No registrations yet.";return;}
-  snap.forEach(doc=>{
-   const d=doc.data(), card=document.createElement("article");
-   card.className="rounded-xl border border-pink-400/20 bg-slate-950/60 p-4";
-   const title=document.createElement("div"); title.className="font-bold"; title.textContent=d.name||"(No name)";
-   const detail=document.createElement("p"); detail.className="text-sm text-slate-300 mt-2";
-   detail.textContent="Phone: "+(d.phone||"")+" | Txn ID: "+(d.txid||"")+" | Status: "+(d.status||"pending");
-   card.append(title,detail);
-   if(d.status==="pending"){
-    const row=document.createElement("div"); row.className="flex gap-2 mt-3";
-    for(const status of ["approved","rejected"]){
-     const b=document.createElement("button"); b.className="btn text-sm "+(status==="approved"?"green":"border border-rose-400/50");
-     b.textContent=status==="approved"?"Approve":"Reject";
-     b.addEventListener("click",async()=>{
-      b.disabled=true;
-      try { await doc.ref.update({status, reviewedAt:firebase.firestore.FieldValue.serverTimestamp()}); await loadRequests(); }
-      catch(err){ alert("Update failed: "+err.message); b.disabled=false; }
-     });
-     row.appendChild(b);
-    }
-    card.appendChild(row);
-   }
-   list.appendChild(card);
-  });
- } catch(err) {
-  list.textContent="Could not load requests: "+err.message;
- }
-}
-
 const SAMPLE_QUESTIONS = [
- {question:"Choose the correct synonym of resilient.",options:["Fragile","Tough","Weak","Hesitant"],answer:1},
- {question:"Choose the grammatically correct sentence.",options:["She don't like tea.","She doesn't likes tea.","She doesn't like tea.","She do not like tea."],answer:2},
+ {question:"Select the correct synonym for “Resilient”:",options:["Fragile","Tough","Weak","Hesitant"],answer:1},
+ {question:"Choose the grammatically correct sentence:",options:["She don't like tea.","She doesn't likes tea.","She doesn't like tea.","She do not like tea."],answer:2},
  {question:"If 2x + 6 = 14, what is x?",options:["2","3","4","5"],answer:2},
  {question:"Which component is commonly called the brain of a computer?",options:["RAM","Hard disk","CPU","Keyboard"],answer:2},
  {question:"Karoonjhar Mountains are located near which area?",options:["Nagarparkar","Hunza","Swat","Ziarat"],answer:0},
- {question:"What is the capital of Sindh?",options:["Hyderabad","Sukkur","Karachi","Larkana"],answer:2}
+ {question:"What is the capital of Sindh province?",options:["Hyderabad","Sukkur","Karachi","Larkana"],answer:2}
 ];
-let examQuestions=[], examAnswers={}, examIndex=0, examSeconds=6000, examClock=null, examDone=false;
-function formatTime(s){return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");}
-async function fetchExamQuestions(){
- try {const snap=await db.collection("questions").orderBy("createdAt","asc").limit(100).get();const arr=snap.docs.map(d=>({id:d.id,...d.data()})).filter(q=>q.question&&Array.isArray(q.options)&&q.options.length===4&&Number.isInteger(q.answer));return arr.length?arr:SAMPLE_QUESTIONS;}catch(e){return SAMPLE_QUESTIONS;}
+let examQuestions=[], currentIndex=0, answers={}, timerHandle=null, secondsLeft=100*60, examFinished=false;
+
+function showTab(tab){
+ ["register","exam","admin"].forEach(name=>document.getElementById("tab-"+name).classList.toggle("hidden",name!==tab));
+ window.scrollTo({top:0,behavior:"smooth"});
 }
-function drawExamQuestion(){const q=examQuestions[examIndex];document.getElementById("examProgress").textContent=`Question ${examIndex+1} of ${examQuestions.length}`;document.getElementById("examQuestion").textContent=q.question;const opts=document.getElementById("examOptions");opts.innerHTML="";q.options.forEach((option,i)=>{const label=document.createElement("label");label.className="option";const radio=document.createElement("input");radio.type="radio";radio.name="examChoice";radio.value=i;radio.checked=examAnswers[examIndex]===i;radio.addEventListener("change",()=>{examAnswers[examIndex]=i;});const span=document.createElement("span");span.textContent=String.fromCharCode(65+i)+". "+option;label.append(radio,span);opts.appendChild(label);});document.getElementById("prevQuestionBtn").disabled=examIndex===0;document.getElementById("nextQuestionBtn").classList.toggle("hidden",examIndex===examQuestions.length-1);}
-async function startPracticeExam(){examQuestions=await fetchExamQuestions();examAnswers={};examIndex=0;examSeconds=6000;examDone=false;document.getElementById("examStartArea").classList.add("hidden");document.getElementById("examResult").classList.add("hidden");document.getElementById("examArea").classList.remove("hidden");drawExamQuestion();document.getElementById("examTimer").textContent=formatTime(examSeconds);clearInterval(examClock);examClock=setInterval(()=>{examSeconds--;document.getElementById("examTimer").textContent=formatTime(examSeconds);if(examSeconds<=0)finishPracticeExam(true);},1000);}
-function finishPracticeExam(auto=false){if(examDone)return;examDone=true;clearInterval(examClock);let score=0;examQuestions.forEach((q,i)=>{if(examAnswers[i]===q.answer)score++;});document.getElementById("examArea").classList.add("hidden");const result=document.getElementById("examResult");result.classList.remove("hidden");result.textContent=`${auto?"Time is up. ":""}Practice completed. Score: ${score} / ${examQuestions.length}. This result is shown only in this browser and is not a verified exam record.`;document.getElementById("examStartArea").classList.remove("hidden");document.getElementById("startExamBtn").textContent="Try Practice Exam Again";}
-document.getElementById("startExamBtn").addEventListener("click",startPracticeExam);document.getElementById("prevQuestionBtn").addEventListener("click",()=>{if(examIndex>0){examIndex--;drawExamQuestion();}});document.getElementById("nextQuestionBtn").addEventListener("click",()=>{if(examIndex<examQuestions.length-1){examIndex++;drawExamQuestion();}});document.getElementById("finishExamBtn").addEventListener("click",()=>finishPracticeExam(false));
-function clearQuestionForm(){document.getElementById("questionForm").reset();document.getElementById("questionId").value="";document.getElementById("questionMessage").textContent="";document.getElementById("saveQuestionBtn").textContent="Save Question";}
-document.getElementById("cancelQuestionBtn").addEventListener("click",clearQuestionForm);document.getElementById("refreshQuestionsBtn").addEventListener("click",loadQuestions);
-document.getElementById("questionForm").addEventListener("submit",async e=>{e.preventDefault();if(!auth.currentUser){message("questionMessage","Please sign in first.",true);return;}const question=document.getElementById("questionText").value.trim();const options=document.getElementById("questionOptions").value.split("\n").map(x=>x.trim()).filter(Boolean);const answer=Number(document.getElementById("questionAnswer").value);const id=document.getElementById("questionId").value;if(options.length!==4){message("questionMessage","Enter exactly four non-empty options, one per line.",true);return;}const btn=document.getElementById("saveQuestionBtn");btn.disabled=true;try{const count=await db.collection("questions").get();if(!id&&count.size>=100)throw new Error("Question limit reached (100). Delete one before adding another.");const payload={question,options,answer,updatedAt:firebase.firestore.FieldValue.serverTimestamp()};if(id)await db.collection("questions").doc(id).update(payload);else await db.collection("questions").add({...payload,createdAt:firebase.firestore.FieldValue.serverTimestamp()});message("questionMessage","Question saved.");clearQuestionForm();await loadQuestions();}catch(err){message("questionMessage","Save failed: "+err.message,true);}finally{btn.disabled=false;}});
-async function loadQuestions(){if(!auth.currentUser)return;const list=document.getElementById("questionList");list.textContent="Loading…";try{const snap=await db.collection("questions").orderBy("createdAt","asc").limit(100).get();document.getElementById("questionCount").textContent=`${snap.size} of 100 questions saved`;list.innerHTML="";if(snap.empty){list.textContent="No organizer questions saved yet. Practice exam will use sample questions.";return;}snap.forEach(doc=>{const d=doc.data(),card=document.createElement("div");card.className="rounded-xl border border-pink-400/20 p-4";const title=document.createElement("p");title.className="font-semibold";title.textContent=d.question;const opts=document.createElement("p");opts.className="text-sm text-slate-300 mt-2";opts.textContent=(d.options||[]).map((o,i)=>`${String.fromCharCode(65+i)}. ${o}${i===d.answer?" ✓":""}`).join(" | ");const actions=document.createElement("div");actions.className="flex gap-2 mt-3";const edit=document.createElement("button");edit.className="btn cyan text-sm";edit.textContent="Edit";edit.addEventListener("click",()=>{document.getElementById("questionId").value=doc.id;document.getElementById("questionText").value=d.question;document.getElementById("questionOptions").value=d.options.join("\n");document.getElementById("questionAnswer").value=String(d.answer);document.getElementById("saveQuestionBtn").textContent="Update Question";document.getElementById("questionForm").scrollIntoView({behavior:"smooth"});});const del=document.createElement("button");del.className="btn border border-rose-400/50 text-sm";del.textContent="Delete";del.addEventListener("click",async()=>{if(confirm("Delete this question?")){try{await doc.ref.delete();await loadQuestions();}catch(err){alert("Delete failed: "+err.message);}}});actions.append(edit,del);card.append(title,opts,actions);list.appendChild(card);});}catch(err){list.textContent="Could not load questions: "+err.message;}}
+function setMessage(id,text,error=false){
+ const el=document.getElementById(id);el.textContent=text;el.className="mt-3 text-sm "+(error?"text-rose-300":"text-emerald-300");
+}
+document.getElementById("regForm").addEventListener("submit",async function(e){
+ e.preventDefault();
+ const btn=document.getElementById("submitBtn");btn.disabled=true;
+ const name=document.getElementById("studentName").value.trim();
+ const phone=document.getElementById("studentPhone").value.trim();
+ const txid=document.getElementById("studentTxID").value.trim();
+ try{
+  await db.collection("registrations").add({name,phone,txid,status:"pending",createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+  const result=document.getElementById("registrationResult");result.classList.remove("hidden");
+  result.textContent="Registration submitted successfully. Your request is pending organizer review. Keep your payment receipt.";
+  this.reset();
+ }catch(err){const result=document.getElementById("registrationResult");result.classList.remove("hidden");result.textContent="Could not submit: "+err.message;}
+ finally{btn.disabled=false;}
+});
+
+document.getElementById("loginForm").addEventListener("submit",async e=>{
+ e.preventDefault();const btn=document.getElementById("loginBtn");btn.disabled=true;
+ try{await auth.signInWithEmailAndPassword(document.getElementById("adminEmail").value.trim(),document.getElementById("adminPassword").value);}
+ catch(err){setMessage("loginMessage","Sign-in failed: "+err.message,true);}
+ finally{btn.disabled=false;}
+});
+auth.onAuthStateChanged(user=>{
+ const isOrganizer=!!user&&user.uid===ORGANIZER_UID;
+ document.getElementById("adminArea").classList.toggle("hidden",!isOrganizer);
+ document.getElementById("loginForm").classList.toggle("hidden",isOrganizer);
+ document.getElementById("uidInfo").textContent=isOrganizer?"Organizer account verified.": "";
+ if(isOrganizer){setMessage("loginMessage","Signed in. Organizer tools unlocked.");loadRequests();loadQuestions();}
+ else if(user){auth.signOut();setMessage("loginMessage","This account is not authorized as the KTS organizer.",true);}
+});
+document.getElementById("logoutBtn").addEventListener("click",()=>auth.signOut());
+document.getElementById("refreshBtn").addEventListener("click",loadRequests);
+async function loadRequests(){
+ if(!auth.currentUser||auth.currentUser.uid!==ORGANIZER_UID)return;
+ const list=document.getElementById("requestList");list.textContent="Loading registration requests…";
+ try{
+  const snap=await db.collection("registrations").orderBy("createdAt","desc").limit(200).get();
+  list.replaceChildren();
+  if(snap.empty){list.textContent="No registration requests yet.";return;}
+  snap.forEach(doc=>{
+   const r=doc.data(),card=document.createElement("div");card.className="rounded-xl border border-pink-400/20 bg-slate-950/60 p-3";
+   const details=document.createElement("div");details.className="text-sm break-words";
+   details.textContent=`${r.name||"—"} | ${r.phone||"—"} | TxID: ${r.txid||"—"} | Status: ${r.status||"pending"}`;
+   card.appendChild(details);
+   const actions=document.createElement("div");actions.className="flex gap-2 mt-3";
+   ["approved","rejected"].forEach(status=>{
+    const b=document.createElement("button");b.className="btn text-sm "+(status==="approved"?"green":"border border-rose-400/40 text-rose-200");b.textContent=status==="approved"?"Approve":"Reject";
+    b.addEventListener("click",async()=>{b.disabled=true;try{await doc.ref.update({status,reviewedAt:firebase.firestore.FieldValue.serverTimestamp()});await loadRequests();}catch(err){alert("Update failed: "+err.message);b.disabled=false;}});
+    actions.appendChild(b);
+   });
+   card.appendChild(actions);list.appendChild(card);
+  });
+ }catch(err){list.textContent="Could not load registrations: "+err.message;}
+}
+
+function clearQuestionForm(){
+ document.getElementById("questionForm").reset();document.getElementById("questionId").value="";
+ document.getElementById("questionMessage").textContent="";document.getElementById("saveQuestionBtn").textContent="Save Question";
+}
+document.getElementById("cancelQuestionBtn").addEventListener("click",clearQuestionForm);
+document.getElementById("refreshQuestionsBtn").addEventListener("click",loadQuestions);
+document.getElementById("questionForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ if(!auth.currentUser||auth.currentUser.uid!==ORGANIZER_UID){setMessage("questionMessage","Organizer sign-in required.",true);return;}
+ const question=document.getElementById("questionTextInput").value.trim();
+ const options=document.getElementById("questionOptions").value.split("\n").map(x=>x.trim()).filter(Boolean);
+ const answer=Number(document.getElementById("questionAnswer").value),id=document.getElementById("questionId").value;
+ if(options.length!==4){setMessage("questionMessage","Enter exactly four non-empty options, one per line.",true);return;}
+ const btn=document.getElementById("saveQuestionBtn");btn.disabled=true;
+ try{
+  const count=await db.collection("questions").get();
+  if(!id&&count.size>=100)throw new Error("Question limit reached (100). Delete one before adding another.");
+  const payload={question,options,answer,updatedAt:firebase.firestore.FieldValue.serverTimestamp()};
+  if(id)await db.collection("questions").doc(id).update(payload);
+  else await db.collection("questions").add({...payload,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+  setMessage("questionMessage","Question saved.");clearQuestionForm();await loadQuestions();
+ }catch(err){setMessage("questionMessage","Save failed: "+err.message,true);}
+ finally{btn.disabled=false;}
+});
+async function loadQuestions(){
+ if(!auth.currentUser||auth.currentUser.uid!==ORGANIZER_UID)return;
+ const list=document.getElementById("questionList");list.textContent="Loading…";
+ try{
+  const snap=await db.collection("questions").orderBy("createdAt","asc").limit(100).get();
+  document.getElementById("questionCount").textContent=`${snap.size} of 100 questions saved`;
+  list.replaceChildren();
+  if(snap.empty){list.textContent="No questions saved yet. The practice exam will use sample questions.";return;}
+  snap.forEach(doc=>{
+   const q=doc.data(),card=document.createElement("div");card.className="rounded-xl border border-pink-400/20 bg-slate-950/60 p-3";
+   const title=document.createElement("p");title.className="font-semibold";title.textContent=q.question||"(No question text)";card.appendChild(title);
+   const opts=document.createElement("p");opts.className="text-xs muted mt-2";opts.textContent=(q.options||[]).map((o,i)=>String.fromCharCode(65+i)+". "+o).join("  •  ");card.appendChild(opts);
+   const correct=document.createElement("p");correct.className="text-xs text-emerald-300 mt-1";correct.textContent="Correct option: "+String.fromCharCode(65+(q.answer||0));card.appendChild(correct);
+   const actions=document.createElement("div");actions.className="flex gap-2 mt-3";
+   const edit=document.createElement("button");edit.className="btn cyan text-sm";edit.textContent="Edit";edit.addEventListener("click",()=>{
+    document.getElementById("questionId").value=doc.id;document.getElementById("questionTextInput").value=q.question||"";
+    document.getElementById("questionOptions").value=(q.options||[]).join("\n");document.getElementById("questionAnswer").value=String(q.answer||0);
+    document.getElementById("saveQuestionBtn").textContent="Update Question";document.getElementById("questionForm").scrollIntoView({behavior:"smooth"});
+   });
+   const del=document.createElement("button");del.className="btn border border-rose-400/40 text-rose-200 text-sm";del.textContent="Delete";del.addEventListener("click",async()=>{
+    if(!confirm("Delete this question?"))return;del.disabled=true;try{await doc.ref.delete();await loadQuestions();}catch(err){alert("Delete failed: "+err.message);del.disabled=false;}
+   });
+   actions.append(edit,del);card.appendChild(actions);list.appendChild(card);
+  });
+ }catch(err){list.textContent="Could not load questions: "+err.message;}
+}
+
+async function fetchExamQuestions(){
+ try{
+  const snap=await db.collection("questions").orderBy("createdAt","asc").limit(100).get();
+  const list=snap.docs.map(d=>({id:d.id,...d.data()})).filter(q=>q.question&&Array.isArray(q.options)&&q.options.length===4&&Number.isInteger(q.answer));
+  return list.length?list:SAMPLE_QUESTIONS;
+ }catch(err){return SAMPLE_QUESTIONS;}
+}
+function renderQuestion(){
+ const q=examQuestions[currentIndex];
+ document.getElementById("questionProgress").textContent=`Question ${currentIndex+1} of ${examQuestions.length}`;
+ document.getElementById("categoryTag").textContent="Practice MCQ";
+ const qText=document.getElementById("questionText");qText.classList.remove("question-enter");void qText.offsetWidth;qText.classList.add("question-enter");qText.textContent=q.question;
+ const container=document.getElementById("optionsContainer");container.replaceChildren();
+ q.options.forEach((option,i)=>{
+  const label=document.createElement("label");label.className="option";
+  const input=document.createElement("input");input.type="radio";input.name="answer";input.value=i;input.checked=answers[currentIndex]===i;
+  input.addEventListener("change",()=>{answers[currentIndex]=i;document.getElementById("examNotice").textContent=`Answered ${Object.keys(answers).length} of ${examQuestions.length}`;});
+  const span=document.createElement("span");span.textContent=String.fromCharCode(65+i)+". "+option;label.append(input,span);container.appendChild(label);
+ });
+ document.getElementById("prevBtn").disabled=currentIndex===0;
+ document.getElementById("nextBtn").classList.toggle("hidden",currentIndex===examQuestions.length-1);
+ document.getElementById("submitBtn").classList.toggle("hidden",currentIndex!==examQuestions.length-1);
+ document.getElementById("examNotice").textContent=`Answered ${Object.keys(answers).length} of ${examQuestions.length}`;
+}
+function updateTimer(){
+ if(examFinished)return;
+ const m=Math.floor(secondsLeft/60),s=secondsLeft%60;
+ document.getElementById("examTimer").textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+ if(secondsLeft<=0){finishExam(true);return;}secondsLeft--;
+}
+async function startExam(){
+ examQuestions=await fetchExamQuestions();currentIndex=0;answers={};secondsLeft=100*60;examFinished=false;
+ document.getElementById("examLogin").classList.add("hidden");document.getElementById("examSubmitted").classList.add("hidden");
+ document.getElementById("activeExam").classList.remove("hidden");renderQuestion();updateTimer();
+ clearInterval(timerHandle);timerHandle=setInterval(updateTimer,1000);
+}
+function finishExam(auto=false){
+ if(examFinished)return;
+ if(!auto&&!confirm("Finish this practice exam now?"))return;
+ examFinished=true;clearInterval(timerHandle);
+ const score=examQuestions.reduce((total,q,i)=>total+(answers[i]===q.answer?1:0),0);
+ document.getElementById("activeExam").classList.add("hidden");document.getElementById("examSubmitted").classList.remove("hidden");
+ document.getElementById("scoreText").textContent=`${auto?"Time is up. ":""}Practice score: ${score} / ${examQuestions.length}`;
+}
+document.getElementById("startExamBtn").addEventListener("click",startExam);
+document.getElementById("prevBtn").addEventListener("click",()=>{if(currentIndex>0){currentIndex--;renderQuestion();}});
+document.getElementById("nextBtn").addEventListener("click",()=>{if(currentIndex<examQuestions.length-1){currentIndex++;renderQuestion();}});
+document.getElementById("submitBtn").addEventListener("click",()=>finishExam(false));
+document.addEventListener("visibilitychange",()=>{if(document.hidden&&!document.getElementById("activeExam").classList.contains("hidden"))document.getElementById("examNotice").textContent="Practice mode does not enforce proctoring."});
+
+const examDate=new Date("2026-10-02T11:00:00+05:00").getTime();
+function updateCountdown(){
+ const distance=examDate-Date.now();
+ if(distance<=0){["days","hours","minutes","seconds"].forEach(id=>document.getElementById(id).textContent="00");return;}
+ const values=[Math.floor(distance/86400000),Math.floor(distance%86400000/3600000),Math.floor(distance%3600000/60000),Math.floor(distance%60000/1000)];
+ ["days","hours","minutes","seconds"].forEach((id,i)=>document.getElementById(id).textContent=String(values[i]).padStart(2,"0"));
+}
+updateCountdown();setInterval(updateCountdown,1000);
 </script>
 </body>
 </html>
