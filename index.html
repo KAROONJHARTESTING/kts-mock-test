@@ -190,7 +190,7 @@ body:before{content:"";position:fixed;inset:-30%;z-index:-1;pointer-events:none;
     </div>
     <div class="card p-4">
      <h3 class="font-bold text-lg mb-2">Question Bank Editor</h3>
-     <p class="text-xs text-amber-200 mb-4">Add, edit, or delete up to 100 practice questions. The answer key is visible to visitors in this practice version.</p>
+     <p class="text-xs text-amber-200 mb-4">Manage up to 100 questions. A secure live exam also requires server-side answer-key protection and deployed Firestore rules.</p>
      <form id="questionForm" class="space-y-3 rounded-xl border border-pink-400/20 p-4">
       <input id="questionId" type="hidden">
       <label class="block text-sm">Question<textarea id="questionTextInput" class="field mt-1" rows="3" maxlength="1000" required></textarea></label>
@@ -298,11 +298,19 @@ async function loadRequests(){
    card.appendChild(details);
    const actions=document.createElement("div");actions.className="flex gap-2 mt-3";
    ["approved","rejected"].forEach(status=>{
-    const b=document.createElement("button");b.className="btn text-sm "+(status==="approved"?"green":"border border-rose-400/40 text-rose-200");b.textContent=status==="approved"?"Approve":"Reject";
-    b.addEventListener("click",async()=>{b.disabled=true;try{await doc.ref.update({status,reviewedAt:firebase.firestore.FieldValue.serverTimestamp()});await loadRequests();}catch(err){alert("Update failed: "+err.message);b.disabled=false;}});
+    const b=document.createElement("button");b.className="btn text-sm "+(status==="approved"?"green":"border border-rose-400/40 text-rose-200");b.textContent=status==="approved"?"Approve & Generate Passkey":"Reject";
+    b.addEventListener("click",async()=>{b.disabled=true;try{
+      if(status==="approved"){
+       let key="";const alphabet="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";const bytes=new Uint8Array(12);crypto.getRandomValues(bytes);key=Array.from(bytes,x=>alphabet[x%alphabet.length]).join("");
+       const digest=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(key));const hash=Array.from(new Uint8Array(digest),b=>b.toString(16).padStart(2,"0")).join("");await db.collection("examPasskeys").doc(hash).set({registrationId:doc.id,used:false,createdAt:firebase.firestore.FieldValue.serverTimestamp()});await doc.ref.update({status,passkey:key,reviewedAt:firebase.firestore.FieldValue.serverTimestamp()});
+      } else await doc.ref.update({status,reviewedAt:firebase.firestore.FieldValue.serverTimestamp()});
+      await loadRequests();
+     }catch(err){alert("Update failed: "+err.message);b.disabled=false;}});
     actions.appendChild(b);
    });
-   card.appendChild(actions);list.appendChild(card);
+   card.appendChild(actions);
+   if(r.status==="approved"&&r.passkey){const keyBox=document.createElement("div");keyBox.className="mt-3 rounded-lg border border-emerald-400/30 p-3 text-sm";const keyText=document.createElement("b");keyText.textContent="Candidate passkey: "+r.passkey;keyBox.appendChild(keyText);const copy=document.createElement("button");copy.className="btn cyan text-xs ml-2";copy.textContent="Copy";copy.addEventListener("click",()=>navigator.clipboard.writeText(r.passkey).then(()=>copy.textContent="Copied"));keyBox.appendChild(copy);card.appendChild(keyBox);}
+   list.appendChild(card);
   });
  }catch(err){list.textContent="Could not load registrations: "+err.message;}
 }
@@ -396,7 +404,9 @@ async function loadQuestions(){
    const del=document.createElement("button");del.className="btn border border-rose-400/40 text-rose-200 text-sm";del.textContent="Delete";del.addEventListener("click",async()=>{
     if(!confirm("Delete this question?"))return;del.disabled=true;try{await doc.ref.delete();await loadQuestions();}catch(err){alert("Delete failed: "+err.message);del.disabled=false;}
    });
-   actions.append(edit,del);card.appendChild(actions);list.appendChild(card);
+   actions.append(edit,del);card.appendChild(actions);
+   if(r.status==="approved"&&r.passkey){const keyBox=document.createElement("div");keyBox.className="mt-3 rounded-lg border border-emerald-400/30 p-3 text-sm";const keyText=document.createElement("b");keyText.textContent="Candidate passkey: "+r.passkey;keyBox.appendChild(keyText);const copy=document.createElement("button");copy.className="btn cyan text-xs ml-2";copy.textContent="Copy";copy.addEventListener("click",()=>navigator.clipboard.writeText(r.passkey).then(()=>copy.textContent="Copied"));keyBox.appendChild(copy);card.appendChild(keyBox);}
+   list.appendChild(card);
   });
  }catch(err){list.textContent="Could not load questions: "+err.message;}
 }
@@ -417,7 +427,7 @@ function renderQuestion(){
  q.options.forEach((option,i)=>{
   const label=document.createElement("label");label.className="option";
   const input=document.createElement("input");input.type="radio";input.name="answer";input.value=i;input.checked=answers[currentIndex]===i;
-  input.addEventListener("change",()=>{answers[currentIndex]=i;document.getElementById("examNotice").textContent=`Answered ${Object.keys(answers).length} of ${examQuestions.length}`;});
+  input.addEventListener("change",()=>{answers[currentIndex]=i;document.getElementById("examNotice").textContent=`Answered ${Object.keys(answers).length} of ${examQuestions.length}`;if(currentIndex<examQuestions.length-1){setTimeout(()=>{currentIndex++;renderQuestion();document.getElementById("questionText").scrollIntoView({behavior:"smooth",block:"center"});},180);}});
   const span=document.createElement("span");span.textContent=String.fromCharCode(65+i)+". "+option;label.append(input,span);container.appendChild(label);
  });
  document.getElementById("prevBtn").disabled=currentIndex===0;
@@ -432,6 +442,12 @@ function updateTimer(){
  if(secondsLeft<=0){finishExam(true);return;}secondsLeft--;
 }
 async function startExam(){
+ const key=document.getElementById("examPasskey").value.trim().toUpperCase();
+ const message=document.getElementById("examAccessMessage");
+ if(Date.now()<examDate){message.textContent="Exam is locked until 2 October 2026, 11:00 AM Pakistan time.";return;}
+ if(!key){message.textContent="Enter the passkey sent by the organizer.";return;}
+ try {const digest=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(key));const hash=Array.from(new Uint8Array(digest),b=>b.toString(16).padStart(2,"0")).join("");const pass=await db.collection("examPasskeys").doc(hash).get();if(!pass.exists||pass.data().used){message.textContent="Invalid or already-used passkey. Contact the organizer.";return;}await pass.ref.update({used:true,usedAt:firebase.firestore.FieldValue.serverTimestamp()});}
+ catch(err){message.textContent="Passkey verification is not configured securely yet. Contact the organizer.";return;}
  examQuestions=await fetchExamQuestions();currentIndex=0;answers={};secondsLeft=100*60;examFinished=false;focusWarnings=0;
  document.getElementById("integrityNotice").textContent="Focus warnings: 0";
  document.getElementById("examLogin").classList.add("hidden");document.getElementById("examSubmitted").classList.add("hidden");
@@ -461,9 +477,10 @@ document.getElementById("submitBtn").addEventListener("click",()=>finishExam(fal
 document.addEventListener("visibilitychange",()=>{if(document.hidden&&!document.getElementById("activeExam").classList.contains("hidden"))document.getElementById("examNotice").textContent="Practice mode does not enforce proctoring."});
 
 const examDate=new Date("2026-10-02T11:00:00+05:00").getTime();
+document.getElementById("startExamBtn").disabled=Date.now()<examDate;
 function updateCountdown(){
  const distance=examDate-Date.now();
- if(distance<=0){["days","hours","minutes","seconds"].forEach(id=>document.getElementById(id).textContent="00");return;}
+ if(distance<=0){["days","hours","minutes","seconds"].forEach(id=>document.getElementById(id).textContent="00");const b=document.getElementById("startExamBtn");if(b)b.disabled=false;return;}
  const values=[Math.floor(distance/86400000),Math.floor(distance%86400000/3600000),Math.floor(distance%3600000/60000),Math.floor(distance%60000/1000)];
  ["days","hours","minutes","seconds"].forEach((id,i)=>document.getElementById(id).textContent=String(values[i]).padStart(2,"0"));
 }
