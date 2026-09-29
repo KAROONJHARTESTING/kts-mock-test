@@ -155,7 +155,7 @@ body:before{content:"";position:fixed;inset:-30%;z-index:-1;pointer-events:none;
   <div id="examSubmitted" class="hidden card p-8 text-center max-w-lg mx-auto reveal">
    <h2 class="text-2xl font-black text-emerald-300">Practice completed</h2>
    <p id="scoreText" class="my-3"></p>
-   <p class="text-sm muted">This score is displayed in this browser only; it is not a verified result or sent to the organizer.</p>
+   <p class="text-sm muted">Your score is submitted to the organizer dashboard when the connection and Firestore permissions allow it.</p>
    <button class="btn pink mt-4" onclick="showTab('register')">Back to KTS home</button>
   </div>
  </section>
@@ -184,6 +184,7 @@ body:before{content:"";position:fixed;inset:-30%;z-index:-1;pointer-events:none;
      <div><h3 class="text-xl font-bold">Organizer Dashboard</h3><p id="uidInfo" class="text-xs text-slate-400 break-all"></p></div>
      <button id="logoutBtn" class="btn border border-pink-400/50 text-pink-200">Sign out</button>
     </div>
+    <div id="scorePanel" class="card p-4 mb-6"><div class="flex justify-between items-center gap-3 mb-3"><h3 class="font-bold text-lg">Submitted Exam Scores</h3><button id="refreshScoresBtn" class="btn cyan text-sm" type="button">Refresh Scores</button></div><p class="text-xs muted mb-3">Scores submitted by students, identified by passkey.</p><div id="scoreList" class="space-y-2"></div></div>
     <div id="registrationPanel" class="card p-4 mb-6">
      <div class="flex flex-wrap justify-between items-center gap-3 mb-3"><h3 class="font-bold text-lg">Registration requests</h3><button id="refreshBtn" class="btn cyan text-sm">Refresh</button></div>
      <div id="requestList" class="space-y-3"></div>
@@ -279,11 +280,13 @@ auth.onAuthStateChanged(user=>{
  document.getElementById("adminArea").classList.toggle("hidden",!isOrganizer);
  document.getElementById("loginForm").classList.toggle("hidden",isOrganizer);
  document.getElementById("uidInfo").textContent=isOrganizer?"Organizer account verified.": "";
- if(isOrganizer){setMessage("loginMessage","Signed in. Organizer tools unlocked.");loadRequests();loadQuestions();}
+ if(isOrganizer){setMessage("loginMessage","Signed in. Organizer tools unlocked.");loadRequests();loadQuestions();loadScores();}
  else if(user){auth.signOut();setMessage("loginMessage","This account is not authorized as the KTS organizer.",true);}
 });
 document.getElementById("logoutBtn").addEventListener("click",()=>auth.signOut());
 document.getElementById("refreshBtn").addEventListener("click",loadRequests);
+document.getElementById("refreshScoresBtn").addEventListener("click",loadScores);
+async function loadScores(){if(!auth.currentUser||auth.currentUser.uid!==ORGANIZER_UID)return;const list=document.getElementById("scoreList");list.textContent="Loading scores…";try{const snap=await db.collection("examResults").orderBy("submittedAt","desc").limit(500).get();list.replaceChildren();if(snap.empty){list.textContent="No submitted scores yet.";return;}snap.forEach(doc=>{const r=doc.data(),item=document.createElement("div");item.className="rounded-lg border border-emerald-300/20 p-3 text-sm";item.textContent=`Passkey: ${r.passkey||"—"} | Score: ${r.score}/${r.total} | Submitted: ${r.submittedAt?.toDate?.().toLocaleString?.()||"time pending"}`;list.appendChild(item);});}catch(err){list.textContent="Could not load scores: "+err.message+". Check Firestore rules for examResults.";}}
 async function loadRequests(){
  if(!auth.currentUser||auth.currentUser.uid!==ORGANIZER_UID)return;
  const list=document.getElementById("requestList");list.textContent="Loading registration requests…";
@@ -460,7 +463,8 @@ function finishExam(auto=false){
  examFinished=true;clearInterval(timerHandle);
  const score=examQuestions.reduce((total,q,i)=>total+(answers[i]===q.answer?1:0),0);
  document.getElementById("activeExam").classList.add("hidden");document.getElementById("examSubmitted").classList.remove("hidden");
- document.getElementById("scoreText").textContent=`${auto?"Time is up. ":""}Practice score: ${score} / ${examQuestions.length}`;
+ document.getElementById("scoreText").textContent=`${auto?"Time is up. ":""}Score: ${score} / ${examQuestions.length}`;
+ db.collection("examResults").add({passkey:activePasskey,score,total:examQuestions.length,submittedAt:firebase.firestore.FieldValue.serverTimestamp()}).then(()=>{document.getElementById("scoreText").textContent+= " — submission recorded.";}).catch(err=>{document.getElementById("scoreText").textContent+=" — score could not be saved; contact organizer.";console.error("Score save failed",err);});
 }
 document.getElementById("passkeyForm").addEventListener("submit",async e=>{
  e.preventDefault();const key=document.getElementById("passkeyInput").value.trim().toUpperCase(),msg=document.getElementById("passkeyMessage"),btn=document.getElementById("verifyPasskeyBtn");btn.disabled=true;
@@ -469,7 +473,7 @@ document.getElementById("passkeyForm").addEventListener("submit",async e=>{
   const ref=db.collection("examPasskeys").doc(key),snap=await ref.get();
   if(!snap.exists||snap.data().used||snap.data().revoked)throw new Error("Invalid, already-used, or revoked passkey.");
   await ref.update({used:true,usedAt:firebase.firestore.FieldValue.serverTimestamp()});
-  msg.textContent="Passkey accepted. Starting exam…";await startExam();
+  activePasskey=key;msg.textContent="Passkey accepted. Starting exam…";await startExam();
  }catch(err){msg.textContent="Unable to start: "+err.message;}finally{btn.disabled=false;}
 });
 document.getElementById("prevBtn").addEventListener("click",()=>{if(currentIndex>0){currentIndex--;renderQuestion();}});
