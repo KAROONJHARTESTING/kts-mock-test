@@ -100,7 +100,7 @@ body:before{content:"";position:fixed;inset:-30%;z-index:-1;pointer-events:none;
     <div class="rounded-xl bg-emerald-950/50 border border-emerald-400/30 p-4 text-sm">
      <strong class="text-emerald-300">Payment instructions</strong><p>Send Rs. 200/- via Easypaisa to account ending 6415. Confirm account title and number with the organizer before sending.</p>
     </div>
-    <button class="btn pink w-full" id="submitBtn" type="submit">Submit Registration</button>
+    <button class="btn pink w-full" id="registrationSubmitBtn" type="submit">Submit Registration</button>
    </form>
    <div id="registrationResult" class="hidden mt-4 rounded-xl border border-emerald-400/40 bg-emerald-950/40 p-4" role="status" aria-live="polite"></div>
   </div>
@@ -122,20 +122,27 @@ body:before{content:"";position:fixed;inset:-30%;z-index:-1;pointer-events:none;
    </div>
    <div class="card p-6 reveal"><h2 class="font-bold text-pink-300 mb-2">Frequently Asked Questions</h2>
     <p class="font-semibold text-sm">How is registration confirmed?</p><p class="text-sm muted mb-3">The organizer reviews the submitted transaction ID and manually approves or rejects the request.</p>
-    <p class="font-semibold text-sm">Is this a secure official exam?</p><p class="text-sm muted">This site currently provides practice functionality. It does not securely verify payment, restrict exam access to approved students, or store verified exam results.</p>
+    <p class="font-semibold text-sm">How do I enter the exam?</p><p class="text-sm muted">After organizer approval, you receive a unique passkey through WhatsApp. Enter it in the Exam Portal after the scheduled opening time.</p>
    </div>
   </div>
  </section>
 
  <section id="tab-exam" class="hidden space-y-5">
   <div id="examLogin" class="card p-6 max-w-2xl mx-auto reveal">
-   <h2 class="text-2xl font-black text-pink-300 mb-2">KTS Practice Exam</h2>
-   <p class="text-sm muted mb-4">Practice mode: up to 100 questions and a 100-minute timer. This is not a secure or proctored exam; answer keys are accessible in the public practice question data.</p>
-   <button class="btn pink" id="startExamBtn"><i class="fa-solid fa-play mr-2"></i>Start Practice Exam</button>
+   <h2 class="text-2xl font-black text-pink-300 mb-2">KTS Mock Exam Portal</h2>
+   <p class="text-sm muted mb-4">The exam opens on <strong class="text-pink-300">02 October 2026 at 11:00 AM Pakistan time</strong>. Enter the unique passkey sent to you by the organizer. The exam contains exactly 100 MCQs.</p>
+   <div class="rounded-xl border border-cyan-300/30 bg-cyan-400/5 p-4 mb-4">
+    <label class="block text-sm font-semibold">Candidate Passkey
+     <input id="examPasskey" class="field mt-2 tracking-[0.25em] uppercase" inputmode="text" autocomplete="off" maxlength="12" minlength="12" pattern="[A-HJ-NP-Z2-9]{12}" placeholder="XXXXXXXXXXXX" aria-describedby="passkeyHelp">
+    </label>
+    <p id="passkeyHelp" class="text-xs muted mt-2">Use the 12-character passkey exactly as received. It can be used only once.</p>
+   </div>
+   <button class="btn pink w-full" id="startExamBtn" type="button"><i class="fa-solid fa-key mr-2"></i>Unlock & Start Exam</button>
+   <p id="examAccessMessage" class="mt-3 text-sm text-amber-200" role="status" aria-live="polite"></p>
   </div>
   <div id="activeExam" class="hidden card p-5 md:p-8 reveal">
    <div class="flex flex-wrap justify-between gap-3 border-b border-pink-400/20 pb-4 mb-5">
-    <div><p class="text-xs text-pink-300">KTS PRACTICE EXAM</p><h2 class="text-xl font-bold">Mock Test</h2></div>
+    <div><p class="text-xs text-pink-300">KTS MOCK EXAM</p><h2 class="text-xl font-bold">Sindh University Entry Mock Test</h2></div>
     <div class="text-right"><p class="text-xs muted">Time remaining</p><strong id="examTimer" class="text-2xl text-pink-300">100:00</strong></div>
    </div>
    <div class="rounded-xl border border-amber-300/40 bg-amber-400/10 p-3 mb-5 text-sm">
@@ -148,14 +155,14 @@ body:before{content:"";position:fixed;inset:-30%;z-index:-1;pointer-events:none;
    <div class="flex flex-wrap justify-between gap-3 mt-7 border-t border-pink-400/20 pt-4">
     <button id="prevBtn" class="btn border border-pink-400/40 text-pink-200">Previous</button>
     <button id="nextBtn" class="btn pink">Next</button>
-    <button id="submitBtn" class="btn green">Finish Exam</button>
+    <button id="finishExamBtn" class="btn green">Finish Exam</button>
    </div>
    <p id="examNotice" class="text-xs muted mt-4" aria-live="polite"></p>
   </div>
   <div id="examSubmitted" class="hidden card p-8 text-center max-w-lg mx-auto reveal">
-   <h2 class="text-2xl font-black text-emerald-300">Practice completed</h2>
+   <h2 class="text-2xl font-black text-emerald-300">Exam completed</h2>
    <p id="scoreText" class="my-3"></p>
-   <p class="text-sm muted">This score is displayed in this browser only; it is not a verified result or sent to the organizer.</p>
+   <p class="text-sm muted">Your score is shown after submission. Official verification depends on the Firebase security configuration.</p>
    <button class="btn pink mt-4" onclick="showTab('register')">Back to KTS home</button>
   </div>
  </section>
@@ -190,7 +197,7 @@ body:before{content:"";position:fixed;inset:-30%;z-index:-1;pointer-events:none;
     </div>
     <div class="card p-4">
      <h3 class="font-bold text-lg mb-2">Question Bank Editor</h3>
-     <p class="text-xs text-amber-200 mb-4">Manage up to 100 questions. A secure live exam also requires server-side answer-key protection and deployed Firestore rules.</p>
+     <p class="text-xs text-amber-200 mb-4">Manage up to 100 questions. Organizer access is protected by Firebase Authentication and the organizer UID check.</p>
      <form id="questionForm" class="space-y-3 rounded-xl border border-pink-400/20 p-4">
       <input id="questionId" type="hidden">
       <label class="block text-sm">Question<textarea id="questionTextInput" class="field mt-1" rows="3" maxlength="1000" required></textarea></label>
@@ -255,7 +262,7 @@ function setMessage(id,text,error=false){
 }
 document.getElementById("regForm").addEventListener("submit",async function(e){
  e.preventDefault();
- const btn=document.getElementById("submitBtn");btn.disabled=true;
+ const btn=document.getElementById("registrationSubmitBtn");btn.disabled=true;
  const name=document.getElementById("studentName").value.trim();
  const phone=document.getElementById("studentPhone").value.trim();
  const txid=document.getElementById("studentTxID").value.trim();
@@ -284,6 +291,25 @@ auth.onAuthStateChanged(user=>{
 });
 document.getElementById("logoutBtn").addEventListener("click",()=>auth.signOut());
 document.getElementById("refreshBtn").addEventListener("click",loadRequests);
+async function generateUniquePasskey(){
+ const alphabet="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+ for(let attempt=0;attempt<5;attempt++){
+  const bytes=new Uint8Array(12);
+  crypto.getRandomValues(bytes);
+  const key=Array.from(bytes,b=>alphabet[b%alphabet.length]).join("");
+  const hash=await hashPasskey(key);
+  const ref=db.collection("examPasskeys").doc(hash);
+  const existing=await ref.get();
+  if(!existing.exists)return {key,hash,ref};
+ }
+ throw new Error("Could not generate a unique passkey. Please try again.");
+}
+
+async function hashPasskey(key){
+ const digest=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(key));
+ return Array.from(new Uint8Array(digest),b=>b.toString(16).padStart(2,"0")).join("");
+}
+
 async function loadRequests(){
  if(!auth.currentUser||auth.currentUser.uid!==ORGANIZER_UID)return;
  const list=document.getElementById("requestList");list.textContent="Loading registration requests…";
@@ -292,24 +318,51 @@ async function loadRequests(){
   list.replaceChildren();
   if(snap.empty){list.textContent="No registration requests yet.";return;}
   snap.forEach(doc=>{
-   const r=doc.data(),card=document.createElement("div");card.className="rounded-xl border border-pink-400/20 bg-slate-950/60 p-3";
+   const r=doc.data(),card=document.createElement("div");
+   card.className="rounded-xl border border-pink-400/20 bg-slate-950/60 p-3";
    const details=document.createElement("div");details.className="text-sm break-words";
    details.textContent=`${r.name||"—"} | ${r.phone||"—"} | TxID: ${r.txid||"—"} | Status: ${r.status||"pending"}`;
    card.appendChild(details);
-   const actions=document.createElement("div");actions.className="flex gap-2 mt-3";
-   ["approved","rejected"].forEach(status=>{
-    const b=document.createElement("button");b.className="btn text-sm "+(status==="approved"?"green":"border border-rose-400/40 text-rose-200");b.textContent=status==="approved"?"Approve & Generate Passkey":"Reject";
-    b.addEventListener("click",async()=>{b.disabled=true;try{
-      if(status==="approved"){
-       let key="";const alphabet="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";const bytes=new Uint8Array(12);crypto.getRandomValues(bytes);key=Array.from(bytes,x=>alphabet[x%alphabet.length]).join("");
-       const digest=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(key));const hash=Array.from(new Uint8Array(digest),b=>b.toString(16).padStart(2,"0")).join("");await db.collection("examPasskeys").doc(hash).set({registrationId:doc.id,used:false,createdAt:firebase.firestore.FieldValue.serverTimestamp()});await doc.ref.update({status,passkey:key,reviewedAt:firebase.firestore.FieldValue.serverTimestamp()});
-      } else await doc.ref.update({status,reviewedAt:firebase.firestore.FieldValue.serverTimestamp()});
-      await loadRequests();
-     }catch(err){alert("Update failed: "+err.message);b.disabled=false;}});
-    actions.appendChild(b);
+   const actions=document.createElement("div");actions.className="flex flex-wrap gap-2 mt-3";
+   const approve=document.createElement("button");
+   approve.className="btn green text-sm";
+   approve.textContent=r.status==="approved"?"Regenerate Passkey":"Approve & Generate Passkey";
+   approve.addEventListener("click",async()=>{
+    approve.disabled=true;
+    try{
+     const oldHash=r.passkeyHash;
+     if(oldHash){
+      try{await db.collection("examPasskeys").doc(oldHash).update({revoked:true,revokedAt:firebase.firestore.FieldValue.serverTimestamp()});}catch(e){}
+     }
+     const {key,hash,ref}=await generateUniquePasskey();
+     await ref.set({registrationId:doc.id,used:false,revoked:false,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+     await doc.ref.update({status:"approved",passkey:key,passkeyHash:hash,reviewedAt:firebase.firestore.FieldValue.serverTimestamp()});
+     await loadRequests();
+    }catch(err){alert("Could not generate passkey: "+err.message);approve.disabled=false;}
    });
+   actions.appendChild(approve);
+   const reject=document.createElement("button");
+   reject.className="btn border border-rose-400/40 text-rose-200 text-sm";
+   reject.textContent="Reject";
+   reject.addEventListener("click",async()=>{
+    reject.disabled=true;
+    try{
+     if(r.passkeyHash){try{await db.collection("examPasskeys").doc(r.passkeyHash).update({revoked:true,revokedAt:firebase.firestore.FieldValue.serverTimestamp()});}catch(e){}}
+     await doc.ref.update({status:"rejected",passkey:firebase.firestore.FieldValue.delete(),passkeyHash:firebase.firestore.FieldValue.delete(),reviewedAt:firebase.firestore.FieldValue.serverTimestamp()});
+     await loadRequests();
+    }catch(err){alert("Update failed: "+err.message);reject.disabled=false;}
+   });
+   actions.appendChild(reject);
    card.appendChild(actions);
-   if(r.status==="approved"&&r.passkey){const keyBox=document.createElement("div");keyBox.className="mt-3 rounded-lg border border-emerald-400/30 p-3 text-sm";const keyText=document.createElement("b");keyText.textContent="Candidate passkey: "+r.passkey;keyBox.appendChild(keyText);const copy=document.createElement("button");copy.className="btn cyan text-xs ml-2";copy.textContent="Copy";copy.addEventListener("click",()=>navigator.clipboard.writeText(r.passkey).then(()=>copy.textContent="Copied"));keyBox.appendChild(copy);card.appendChild(keyBox);}
+   if(r.status==="approved"&&r.passkey){
+    const keyBox=document.createElement("div");keyBox.className="mt-3 rounded-lg border border-emerald-400/30 bg-emerald-950/20 p-3 text-sm";
+    const keyText=document.createElement("b");keyText.textContent="Candidate passkey: "+r.passkey;
+    keyBox.appendChild(keyText);
+    const copy=document.createElement("button");copy.className="btn cyan text-xs ml-2";copy.textContent="Copy";
+    copy.addEventListener("click",async()=>{try{await navigator.clipboard.writeText(r.passkey);copy.textContent="Copied";}catch(e){copy.textContent="Copy failed";}});
+    keyBox.appendChild(copy);
+    card.appendChild(keyBox);
+   }
    list.appendChild(card);
   });
  }catch(err){list.textContent="Could not load registrations: "+err.message;}
@@ -405,82 +458,123 @@ async function loadQuestions(){
     if(!confirm("Delete this question?"))return;del.disabled=true;try{await doc.ref.delete();await loadQuestions();}catch(err){alert("Delete failed: "+err.message);del.disabled=false;}
    });
    actions.append(edit,del);card.appendChild(actions);
-   if(r.status==="approved"&&r.passkey){const keyBox=document.createElement("div");keyBox.className="mt-3 rounded-lg border border-emerald-400/30 p-3 text-sm";const keyText=document.createElement("b");keyText.textContent="Candidate passkey: "+r.passkey;keyBox.appendChild(keyText);const copy=document.createElement("button");copy.className="btn cyan text-xs ml-2";copy.textContent="Copy";copy.addEventListener("click",()=>navigator.clipboard.writeText(r.passkey).then(()=>copy.textContent="Copied"));keyBox.appendChild(copy);card.appendChild(keyBox);}
    list.appendChild(card);
   });
  }catch(err){list.textContent="Could not load questions: "+err.message;}
 }
 
 async function fetchExamQuestions(){
- try{
-  const snap=await db.collection("questions").orderBy("createdAt","asc").limit(100).get();
-  const list=snap.docs.map(d=>({id:d.id,...d.data()})).filter(q=>q.question&&Array.isArray(q.options)&&q.options.length===4&&Number.isInteger(q.answer));
-  return list.length?list:SAMPLE_QUESTIONS;
- }catch(err){return SAMPLE_QUESTIONS;}
+ const snap=await db.collection("questions").orderBy("createdAt","asc").limit(100).get();
+ return snap.docs.map(d=>({id:d.id,...d.data()})).filter(q=>q.question&&Array.isArray(q.options)&&q.options.length===4&&Number.isInteger(q.answer)&&q.answer>=0&&q.answer<=3);
 }
+
 function renderQuestion(){
  const q=examQuestions[currentIndex];
+ if(!q)return;
  document.getElementById("questionProgress").textContent=`Question ${currentIndex+1} of ${examQuestions.length}`;
- document.getElementById("categoryTag").textContent="Practice MCQ";
- const qText=document.getElementById("questionText");qText.classList.remove("question-enter");void qText.offsetWidth;qText.classList.add("question-enter");qText.textContent=q.question;
+ document.getElementById("categoryTag").textContent="MCQ";
+ const qText=document.getElementById("questionText");
+ qText.classList.remove("question-enter");void qText.offsetWidth;qText.classList.add("question-enter");qText.textContent=q.question;
  const container=document.getElementById("optionsContainer");container.replaceChildren();
  q.options.forEach((option,i)=>{
   const label=document.createElement("label");label.className="option";
   const input=document.createElement("input");input.type="radio";input.name="answer";input.value=i;input.checked=answers[currentIndex]===i;
-  input.addEventListener("change",()=>{answers[currentIndex]=i;document.getElementById("examNotice").textContent=`Answered ${Object.keys(answers).length} of ${examQuestions.length}`;if(currentIndex<examQuestions.length-1){setTimeout(()=>{currentIndex++;renderQuestion();document.getElementById("questionText").scrollIntoView({behavior:"smooth",block:"center"});},180);}});
+  input.addEventListener("change",()=>{
+   answers[currentIndex]=i;
+   document.getElementById("examNotice").textContent=`Answered ${Object.keys(answers).length} of ${examQuestions.length}`;
+   if(currentIndex<examQuestions.length-1){
+    window.setTimeout(()=>{
+     if(examFinished)return;
+     currentIndex++;renderQuestion();
+     document.getElementById("questionText").scrollIntoView({behavior:"smooth",block:"center"});
+    },160);
+   }
+  });
   const span=document.createElement("span");span.textContent=String.fromCharCode(65+i)+". "+option;label.append(input,span);container.appendChild(label);
  });
  document.getElementById("prevBtn").disabled=currentIndex===0;
- document.getElementById("nextBtn").classList.toggle("hidden",currentIndex===examQuestions.length-1);
- document.getElementById("submitBtn").classList.toggle("hidden",currentIndex!==examQuestions.length-1);
+ const isLast=currentIndex===examQuestions.length-1;
+ document.getElementById("nextBtn").classList.toggle("hidden",isLast);
+ document.getElementById("finishExamBtn").classList.toggle("hidden",!isLast);
  document.getElementById("examNotice").textContent=`Answered ${Object.keys(answers).length} of ${examQuestions.length}`;
 }
+
 function updateTimer(){
  if(examFinished)return;
  const m=Math.floor(secondsLeft/60),s=secondsLeft%60;
  document.getElementById("examTimer").textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
- if(secondsLeft<=0){finishExam(true);return;}secondsLeft--;
+ if(secondsLeft<=0){finishExam(true);return;}
+ secondsLeft--;
 }
+
+async function consumePasskey(key){
+ const hash=await hashPasskey(key);
+ const ref=db.collection("examPasskeys").doc(hash);
+ await db.runTransaction(async tx=>{
+  const snap=await tx.get(ref);
+  if(!snap.exists)throw new Error("INVALID_PASSKEY");
+  const data=snap.data()||{};
+  if(data.used||data.revoked)throw new Error("USED_OR_REVOKED");
+  tx.update(ref,{used:true,usedAt:firebase.firestore.FieldValue.serverTimestamp()});
+ });
+}
+
 async function startExam(){
  const key=document.getElementById("examPasskey").value.trim().toUpperCase();
  const message=document.getElementById("examAccessMessage");
- if(Date.now()<examDate){message.textContent="Exam is locked until 2 October 2026, 11:00 AM Pakistan time.";return;}
- if(!key){message.textContent="Enter the passkey sent by the organizer.";return;}
- try {const digest=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(key));const hash=Array.from(new Uint8Array(digest),b=>b.toString(16).padStart(2,"0")).join("");const pass=await db.collection("examPasskeys").doc(hash).get();if(!pass.exists||pass.data().used){message.textContent="Invalid or already-used passkey. Contact the organizer.";return;}await pass.ref.update({used:true,usedAt:firebase.firestore.FieldValue.serverTimestamp()});}
- catch(err){message.textContent="Passkey verification is not configured securely yet. Contact the organizer.";return;}
- examQuestions=await fetchExamQuestions();currentIndex=0;answers={};secondsLeft=100*60;examFinished=false;focusWarnings=0;
- document.getElementById("integrityNotice").textContent="Focus warnings: 0";
- document.getElementById("examLogin").classList.add("hidden");document.getElementById("examSubmitted").classList.add("hidden");
- document.getElementById("activeExam").classList.remove("hidden");renderQuestion();updateTimer();
- clearInterval(timerHandle);timerHandle=setInterval(updateTimer,1000);
+ message.className="mt-3 text-sm";
+ if(Date.now()<examDate){message.textContent="Exam is locked until 02 October 2026 at 11:00 AM Pakistan time.";message.classList.add("text-amber-200");return;}
+ if(!/^[A-HJ-NP-Z2-9]{12}$/.test(key)){message.textContent="Enter the valid 12-character passkey sent by the organizer.";message.classList.add("text-rose-300");return;}
+ const btn=document.getElementById("startExamBtn");btn.disabled=true;message.textContent="Verifying passkey…";message.classList.add("text-cyan-200");
+ try{
+  await consumePasskey(key);
+  examQuestions=await fetchExamQuestions();
+  if(examQuestions.length!==100)throw new Error(`EXAM_NEEDS_100:${examQuestions.length}`);
+  currentIndex=0;answers={};secondsLeft=100*60;examFinished=false;focusWarnings=0;
+  document.getElementById("integrityNotice").textContent="Focus warnings: 0";
+  document.getElementById("examLogin").classList.add("hidden");document.getElementById("examSubmitted").classList.add("hidden");
+  document.getElementById("activeExam").classList.remove("hidden");
+  renderQuestion();updateTimer();
+  clearInterval(timerHandle);timerHandle=setInterval(updateTimer,1000);
+ }catch(err){
+  const code=err.message||"";
+  if(code.includes("PERMISSION_DENIED"))message.textContent="Exam access is blocked by Firebase rules. Check the examPasskeys read/transaction rules.";
+  else if(code.includes("USED_OR_REVOKED")||code.includes("INVALID_PASSKEY"))message.textContent="Invalid, revoked, or already-used passkey. Contact the organizer.";
+  else if(code.includes("EXAM_NEEDS_100"))message.textContent="The organizer has not published all 100 questions yet. Please contact the organizer.";
+  else message.textContent="Could not unlock the exam. Please try again or contact the organizer.";
+  message.className="mt-3 text-sm text-rose-300";
+ }finally{btn.disabled=Date.now()<examDate;}
 }
+
 document.addEventListener("visibilitychange",()=>{
  if(document.visibilityState==="hidden" && !examFinished && !document.getElementById("activeExam").classList.contains("hidden")){
   focusWarnings++;
-  const note=document.getElementById("integrityNotice");
-  note.textContent=`Focus warning ${focusWarnings}: please return to the exam and avoid switching tabs.`;
+  document.getElementById("integrityNotice").textContent=`Focus warning ${focusWarnings}: return to the exam and avoid switching tabs.`;
  }
 });
 
 function finishExam(auto=false){
  if(examFinished)return;
- if(!auto&&!confirm("Finish this practice exam now?"))return;
+ if(!auto&&!confirm("Finish this exam now?"))return;
  examFinished=true;clearInterval(timerHandle);
  const score=examQuestions.reduce((total,q,i)=>total+(answers[i]===q.answer?1:0),0);
- document.getElementById("activeExam").classList.add("hidden");document.getElementById("examSubmitted").classList.remove("hidden");
- document.getElementById("scoreText").textContent=`${auto?"Time is up. ":""}Practice score: ${score} / ${examQuestions.length}`;
+ document.getElementById("activeExam").classList.add("hidden");
+ document.getElementById("examSubmitted").classList.remove("hidden");
+ document.getElementById("scoreText").textContent=`${auto?"Time is up. ":""}Score: ${score} / ${examQuestions.length}`;
 }
+
 document.getElementById("startExamBtn").addEventListener("click",startExam);
 document.getElementById("prevBtn").addEventListener("click",()=>{if(currentIndex>0){currentIndex--;renderQuestion();}});
 document.getElementById("nextBtn").addEventListener("click",()=>{if(currentIndex<examQuestions.length-1){currentIndex++;renderQuestion();}});
-document.getElementById("submitBtn").addEventListener("click",()=>finishExam(false));
-document.addEventListener("visibilitychange",()=>{if(document.hidden&&!document.getElementById("activeExam").classList.contains("hidden"))document.getElementById("examNotice").textContent="Practice mode does not enforce proctoring."});
+document.getElementById("finishExamBtn").addEventListener("click",()=>finishExam(false));
+document.getElementById("examPasskey").addEventListener("input",e=>{e.target.value=e.target.value.toUpperCase().replace(/[^A-HJ-NP-Z2-9]/g,"").slice(0,12);});
 
 const examDate=new Date("2026-10-02T11:00:00+05:00").getTime();
-document.getElementById("startExamBtn").disabled=Date.now()<examDate;
 function updateCountdown(){
  const distance=examDate-Date.now();
- if(distance<=0){["days","hours","minutes","seconds"].forEach(id=>document.getElementById(id).textContent="00");const b=document.getElementById("startExamBtn");if(b)b.disabled=false;return;}
+ const b=document.getElementById("startExamBtn");
+ if(distance<=0){["days","hours","minutes","seconds"].forEach(id=>document.getElementById(id).textContent="00");if(b)b.disabled=false;return;}
+ if(b)b.disabled=true;
  const values=[Math.floor(distance/86400000),Math.floor(distance%86400000/3600000),Math.floor(distance%3600000/60000),Math.floor(distance%60000/1000)];
  ["days","hours","minutes","seconds"].forEach((id,i)=>document.getElementById(id).textContent=String(values[i]).padStart(2,"0"));
 }
