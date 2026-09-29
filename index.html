@@ -21,261 +21,163 @@
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
+
 <body>
 <header class="sticky top-0 z-20 border-b border-pink-500/20 bg-slate-950/95 backdrop-blur">
  <div class="max-w-6xl mx-auto p-3 flex flex-wrap gap-3 justify-between items-center">
   <div class="flex items-center gap-3">
-   <img src="https://i.ibb.co/CKK6Rn1N/1000166421-2.jpg" alt="KTS logo" class="w-12 h-12 rounded-xl object-cover border border-pink-400">
+   <div class="w-12 h-12 rounded-xl border border-pink-400 grid place-items-center text-pink-300 font-black">KTS</div>
    <div><div class="font-black tracking-wide gradient">KAROONJHAR TESTING SERVICE</div><div class="text-xs text-pink-200">Sindh University Entry Mock Test 2026</div></div>
   </div>
-  <nav class="flex flex-wrap gap-2" aria-label="Main navigation">
-   <button class="btn pink text-sm" onclick="showTab('register')">Register</button>
-   <button class="btn cyan text-sm" onclick="showTab('exam')">Exam Portal</button>
-   <button class="btn text-sm border border-pink-400/50 text-pink-200" onclick="adminLogin()">Admin (local demo)</button>
+  <nav class="flex flex-wrap gap-2">
+   <button class="btn pink text-sm" onclick="showTab('register')">Student Registration</button>
+   <button class="btn cyan text-sm" onclick="showTab('admin')">Organizer Login</button>
   </nav>
  </div>
 </header>
-<main class="max-w-6xl mx-auto p-4 space-y-7">
+<main class="max-w-4xl mx-auto p-4 space-y-6">
  <section class="card p-6 md:p-9 text-center">
-  <p class="text-pink-300 text-xs uppercase tracking-widest font-bold mb-3">Official KTS Mock Examination</p>
-  <h1 class="text-3xl md:text-5xl font-black mb-3">SINDH UNIVERSITY MOCK TEST</h1>
-  <p class="gradient font-bold mb-6">Learn, Prepare, Succeed • Own Your Future</p>
-  <p class="text-sm muted mb-4">Scheduled: <strong class="text-pink-300">02 October 2026, 11:00 AM Pakistan time</strong></p>
-  <div id="countdown" class="grid grid-cols-4 gap-2 max-w-lg mx-auto mb-6">
-   <div class="bg-slate-950 p-3 rounded-xl"><b id="days" class="text-2xl text-pink-300">--</b><div class="text-xs">Days</div></div>
-   <div class="bg-slate-950 p-3 rounded-xl"><b id="hours" class="text-2xl text-purple-300">--</b><div class="text-xs">Hours</div></div>
-   <div class="bg-slate-950 p-3 rounded-xl"><b id="minutes" class="text-2xl text-cyan-300">--</b><div class="text-xs">Minutes</div></div>
-   <div class="bg-slate-950 p-3 rounded-xl"><b id="seconds" class="text-2xl text-emerald-300">--</b><div class="text-xs">Seconds</div></div>
-  </div>
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-left">
-   <div class="bg-slate-950/70 rounded-xl p-3"><small class="text-pink-300">Question bank</small><div class="font-bold">6 sample MCQs</div></div>
-   <div class="bg-slate-950/70 rounded-xl p-3"><small class="text-purple-300">Duration</small><div class="font-bold">90 minutes</div></div>
-   <div class="bg-slate-950/70 rounded-xl p-3"><small class="text-cyan-300">Registration fee</small><div class="font-bold">Rs. 200/-</div></div>
-   <div class="bg-slate-950/70 rounded-xl p-3"><small class="text-emerald-300">Payment</small><div class="font-bold">Easypaisa</div></div>
-  </div>
+  <p class="text-pink-300 text-xs uppercase tracking-widest font-bold mb-3">Registration and payment review</p>
+  <h1 class="text-3xl md:text-5xl font-black gradient mb-4">KTS Mock Test</h1>
+  <p class="text-slate-300">Submit your registration details. Your request remains pending until the organizer verifies payment and approves it.</p>
+  <p class="mt-4 text-sm text-amber-200">Do not submit real student details until the organizer completes the security setup and confirms this page is ready.</p>
  </section>
 
- <section id="tab-register" class="grid md:grid-cols-2 gap-6">
-  <div class="card p-6">
-   <h2 class="text-xl font-bold text-pink-300 mb-4">Student Registration</h2>
-   <div class="rounded-xl border border-amber-400/40 bg-amber-950/30 p-3 text-sm mb-4">
-    <strong>Demo limitation:</strong> This single-file version stores records only in this browser. A TxID is not payment verification. Do not use this form to collect real payments or sensitive student data until a secure backend is connected.
-   </div>
-   <form id="regForm" class="space-y-4">
-    <label class="block text-sm">Full name *<input id="studentName" class="field mt-1" required maxlength="100" autocomplete="name" placeholder="Enter full name"></label>
-    <label class="block text-sm">WhatsApp number *<input id="studentPhone" class="field mt-1" required type="tel" maxlength="20" autocomplete="tel" placeholder="03XXXXXXXXX"></label>
-    <label class="block text-sm">Easypaisa TxID *<input id="studentTxID" class="field mt-1" required maxlength="40" placeholder="Enter transaction ID"></label>
-    <div class="rounded-xl bg-emerald-950/50 border border-emerald-400/30 p-4 text-sm">
-     <strong class="text-emerald-300">Payment instructions</strong><p>Send Rs. 200/- via Easypaisa to account ending 6415. Confirm account title and number with the organizer before sending.</p>
-    </div>
-    <button class="btn pink w-full" type="submit">Create demo registration & passkey</button>
-   </form>
-   <div id="registrationResult" class="hidden mt-4 rounded-xl border border-emerald-400/40 bg-emerald-950/40 p-4" role="status" aria-live="polite"></div>
-  </div>
-  <div class="space-y-6">
-   <div class="card p-6"><h2 class="text-xl font-bold text-purple-300 mb-3">Syllabus Breakdown</h2>
-    <ul class="space-y-2 text-sm">
-     <li class="flex justify-between bg-slate-950/70 p-3 rounded-lg"><span>English</span><b>20 MCQs</b></li>
-     <li class="flex justify-between bg-slate-950/70 p-3 rounded-lg"><span>Mathematics</span><b>10 MCQs</b></li>
-     <li class="flex justify-between bg-slate-950/70 p-3 rounded-lg"><span>Computer Science</span><b>10 MCQs</b></li>
-     <li class="flex justify-between bg-slate-950/70 p-3 rounded-lg"><span>Current Affairs</span><b>40 MCQs</b></li>
-     <li class="flex justify-between bg-slate-950/70 p-3 rounded-lg"><span>General Awareness</span><b>20 MCQs</b></li>
-    </ul>
-    <p class="text-xs muted mt-3">The syllabus distribution is the intended exam plan; the six included questions are placeholders for testing the interface.</p>
-   </div>
-   <div class="card p-6"><h2 class="text-lg font-bold text-cyan-300 mb-2">Contact</h2>
-    <p class="text-sm">Organizer: Kelash Ankhia</p><p class="text-sm">Tech Lead: Aneel Kumar</p>
-    <p class="text-sm mt-2"><a class="text-emerald-300 underline" href="https://wa.me/923483553420" target="_blank" rel="noopener noreferrer">Technical support on WhatsApp</a></p>
-    <p class="text-sm mt-2"><a class="text-emerald-300 underline" href="https://chat.whatsapp.com/IwYFilxURxk8kbjKyPgFra" target="_blank" rel="noopener noreferrer">Join KTS WhatsApp group</a></p>
-   </div>
-   <div class="card p-6"><h2 class="font-bold text-pink-300 mb-2">Frequently Asked Questions</h2>
-    <p class="font-semibold text-sm">How do I get a passkey?</p><p class="text-sm muted mb-3">This demo generates a local test passkey. It does not verify payment or create a server-side account.</p>
-    <p class="font-semibold text-sm">Can the organizer see my registration?</p><p class="text-sm muted">Only on the same browser/device in this demo. A shared database is required for public use.</p>
-   </div>
-  </div>
+ <section id="tab-register" class="card p-6">
+  <h2 class="text-2xl font-bold mb-2">Student Registration</h2>
+  <p class="text-sm text-slate-300 mb-5">Enter accurate details. Never enter your Easypaisa PIN, password, or OTP.</p>
+  <form id="regForm" class="space-y-4">
+   <div><label class="block text-sm mb-1" for="studentName">Full name</label><input class="field" id="studentName" maxlength="100" required autocomplete="name"></div>
+   <div><label class="block text-sm mb-1" for="studentPhone">Phone number</label><input class="field" id="studentPhone" maxlength="20" required inputmode="tel" autocomplete="tel" placeholder="03xxxxxxxxx"></div>
+   <div><label class="block text-sm mb-1" for="studentTxID">Easypaisa transaction ID</label><input class="field" id="studentTxID" maxlength="100" required></div>
+   <button class="btn pink w-full" id="submitBtn" type="submit">Submit Registration</button>
+  </form>
+  <p id="regMessage" class="mt-4 text-sm" role="status"></p>
  </section>
 
- <section id="tab-exam" class="hidden space-y-5">
-  <div id="examLogin" class="card p-6 max-w-lg mx-auto">
-   <h2 class="text-2xl font-black text-pink-300 mb-2">Student Exam Portal</h2>
-   <p class="text-sm muted mb-4">Enter the demo passkey created in this browser. Test data is not shared between devices.</p>
-   <label class="block text-sm">Passkey<input id="loginPasskey" class="field mt-1" placeholder="KTS-XXXXXXXX"></label>
-   <button class="btn cyan w-full mt-4" onclick="startExam()">Unlock & start demo exam</button>
-   <p id="loginError" class="text-rose-300 text-sm mt-3" role="alert"></p>
-  </div>
-  <div id="activeExam" class="hidden card p-5 md:p-8">
-   <div class="flex flex-wrap justify-between gap-3 border-b border-pink-400/20 pb-4 mb-5">
-    <div><p class="text-xs text-pink-300">KTS DEMO EXAM</p><h2 class="text-xl font-bold">Mock Test</h2></div>
-    <div class="text-right"><p class="text-xs muted">Time remaining</p><strong id="examTimer" class="text-2xl text-pink-300">90:00</strong></div>
+ <section id="tab-admin" class="card p-6 hidden">
+  <h2 class="text-2xl font-bold mb-2">Organizer Login</h2>
+  <p class="text-sm text-slate-300 mb-4">Sign in using the organizer account already created in Firebase Authentication.</p>
+  <form id="loginForm" class="space-y-3">
+   <input class="field" id="adminEmail" type="email" autocomplete="username" placeholder="Organizer email" required>
+   <input class="field" id="adminPassword" type="password" autocomplete="current-password" placeholder="Password" required>
+   <button class="btn cyan w-full" type="submit">Sign in</button>
+  </form>
+  <p id="loginMessage" class="mt-3 text-sm" role="status"></p>
+  <div id="adminArea" class="hidden mt-6">
+   <div class="flex flex-wrap justify-between gap-3 items-center mb-3">
+    <div><h3 class="font-bold text-xl">Registration requests</h3><p id="uidInfo" class="text-xs text-slate-400 break-all"></p></div>
+    <button id="logoutBtn" class="btn text-sm border border-pink-400/50">Sign out</button>
    </div>
-   <div class="flex justify-between gap-2 text-sm mb-4"><b id="questionProgress">Question 1</b><span id="categoryTag" class="text-cyan-300">English</span></div>
-   <h3 id="questionText" class="text-lg font-semibold mb-5"></h3>
-   <div id="optionsContainer" class="space-y-3"></div>
-   <div class="flex justify-between gap-3 mt-7 border-t border-pink-400/20 pt-4">
-    <button id="prevBtn" class="btn border border-pink-400/40 text-pink-200" onclick="navigateQuestion(-1)">Previous</button>
-    <button id="nextBtn" class="btn pink" onclick="navigateQuestion(1)">Next</button>
-    <button id="submitBtn" class="hidden btn green" onclick="submitExam()">Submit exam</button>
-   </div>
-   <p id="examNotice" class="text-xs muted mt-4" aria-live="polite"></p>
-  </div>
-  <div id="examSubmitted" class="hidden card p-8 text-center max-w-lg mx-auto">
-   <h2 class="text-2xl font-black text-emerald-300">Demo exam submitted</h2>
-   <p id="scoreText" class="my-3"></p>
-   <p class="text-sm muted">This score is shown in this browser only. It has not been sent to the organizer.</p>
-   <button class="btn pink mt-4" onclick="showTab('register')">Back to KTS home</button>
+   <p class="text-sm text-amber-200 mb-4">If requests do not load, Firestore rules may still be locked. Follow the included setup instructions and authorize this exact admin UID.</p>
+   <button id="refreshBtn" class="btn cyan text-sm mb-4">Refresh requests</button>
+   <div id="requestList" class="space-y-3"></div>
   </div>
  </section>
-
- <section id="adminPanel" class="hidden card p-5">
-  <div class="flex justify-between items-center gap-3 mb-4"><h2 class="text-xl font-bold text-pink-300">Local demo registrations</h2><button class="btn border border-pink-400/40" onclick="closeAdmin()">Close</button></div>
-  <p class="text-xs text-amber-300 mb-3">Local-only records. This is not a secure administrator system; do not publish real student data here.</p>
-  <div class="overflow-x-auto"><table class="w-full text-left text-sm"><thead><tr class="text-pink-300 border-b border-pink-400/20"><th class="p-2">Name</th><th class="p-2">Phone</th><th class="p-2">TxID</th><th class="p-2">Passkey</th></tr></thead><tbody id="adminTableBody"></tbody></table></div>
-  <div class="flex justify-between items-center mt-4"><span id="regCount" class="text-sm muted"></span><button class="btn border border-rose-400/50 text-rose-300" onclick="clearDatabase()">Clear local records</button></div>
+ <section class="card p-5">
+  <h3 class="font-bold mb-2">Organizer setup note</h3>
+  <p class="text-sm text-slate-300">This version connects registration and manual approval to Firebase. The exam, passkey delivery, and secure grading are intentionally not enabled yet; browser-only answer checking is not secure for a real exam.</p>
  </section>
 </main>
-<footer class="border-t border-pink-500/20 bg-slate-950 p-5 text-center text-xs text-pink-200/70 mt-8">
- © 2026 Karoonjhar Testing Service. Platform designed by Aneel Kumar.
-</footer>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
-"use strict";
-const STORAGE_KEY = "kts_demo_registrations_v2";
-// Demo-only passphrase. It is visible to anyone who views this HTML source.
-// Replace the admin design with server-side authentication before public use.
-const DEMO_ADMIN_PASSPHRASE = "CHANGE-ME-BEFORE-TESTING";
-const questions = [
- {section:"English",q:"Select the correct synonym for “Resilient”:",options:["Fragile","Tough","Weak","Hesitant"],answer:1},
- {section:"English",q:"Choose the grammatically correct sentence:",options:["She don't like tea.","She doesn't likes tea.","She doesn't like tea.","She do not like tea."],answer:2},
- {section:"Mathematics",q:"If 2x + 6 = 14, what is x?",options:["2","3","4","5"],answer:2},
- {section:"Computer Science",q:"Which component is commonly called the brain of a computer?",options:["RAM","Hard disk","CPU","Keyboard"],answer:2},
- {section:"General Awareness",q:"Karoonjhar Mountains are located near which area?",options:["Nagarparkar","Hunza","Swat","Ziarat"],answer:0},
- {section:"General Awareness",q:"What is the capital of Sindh province?",options:["Hyderabad","Sukkur","Karachi","Larkana"],answer:2}
-];
-let registrations = loadRegistrations();
-let currentIndex = 0, answers = {}, timerHandle = null, secondsLeft = 90*60, examFinished = false;
+const firebaseConfig = {
+  apiKey: "AIzaSyCrzkgAWOPaoxkPRirZbW8xwVC70UNxToY",
+  authDomain: "kts-mock-test.firebaseapp.com",
+  projectId: "kts-mock-test",
+  storageBucket: "kts-mock-test.firebasestorage.app",
+  messagingSenderId: "177159577898",
+  appId: "1:177159577898:web:d811fdddeed70e0ec6be53"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-function loadRegistrations(){
- try { const data=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]"); return Array.isArray(data)?data:[]; }
- catch { return []; }
+function showTab(tab) {
+ document.getElementById("tab-register").classList.toggle("hidden", tab !== "register");
+ document.getElementById("tab-admin").classList.toggle("hidden", tab !== "admin");
+ window.scrollTo({top:0, behavior:"smooth"});
 }
-function saveRegistrations(){ localStorage.setItem(STORAGE_KEY,JSON.stringify(registrations)); }
-function showTab(tab){
- document.getElementById("tab-register").classList.toggle("hidden",tab!=="register");
- document.getElementById("tab-exam").classList.toggle("hidden",tab!=="exam");
- document.getElementById("adminPanel").classList.add("hidden");
- window.scrollTo({top:0,behavior:"smooth"});
+function message(id, text, isError=false) {
+ const el=document.getElementById(id); el.textContent=text;
+ el.className="mt-3 text-sm "+(isError?"text-rose-300":"text-emerald-300");
 }
-function makePasskey(){
- let key;
- do { key="KTS-"+crypto.randomUUID().replaceAll("-","").slice(0,8).toUpperCase(); }
- while(registrations.some(r=>r.passkey===key));
- return key;
-}
-document.getElementById("regForm").addEventListener("submit",function(e){
+document.getElementById("regForm").addEventListener("submit", async (e)=>{
  e.preventDefault();
+ const btn=document.getElementById("submitBtn"); btn.disabled=true;
  const name=document.getElementById("studentName").value.trim();
  const phone=document.getElementById("studentPhone").value.trim();
  const txid=document.getElementById("studentTxID").value.trim();
- if(!name||!phone||!txid){return;}
- if(registrations.some(r=>r.txid.toLowerCase()===txid.toLowerCase())){
-  alert("This TxID already exists in this browser's demo records.");return;
- }
- const passkey=makePasskey();
- registrations.push({name,phone,txid,passkey,createdAt:new Date().toISOString()});
- saveRegistrations();
- const result=document.getElementById("registrationResult");
- result.classList.remove("hidden");
- result.replaceChildren();
- const heading=document.createElement("p");heading.className="font-bold text-emerald-300";heading.textContent="Demo registration created";
- const detail=document.createElement("p");detail.className="text-sm mt-2";detail.textContent="Your local demo passkey: "+passkey;
- const warning=document.createElement("p");warning.className="text-xs muted mt-2";warning.textContent="Save it for this browser only. Payment has not been verified.";
- result.append(heading,detail,warning);
- this.reset();
+ try {
+  await db.collection("registrations").add({
+   name, phone, txid, status:"pending", createdAt:firebase.firestore.FieldValue.serverTimestamp()
+  });
+  message("regMessage","Registration submitted. Keep your transaction receipt; approval is manual.");
+  e.target.reset();
+ } catch(err) {
+  message("regMessage","Could not submit: "+err.message+" (Organizer: check Firestore rules/setup.)",true);
+ } finally { btn.disabled=false; }
 });
-function adminLogin(){
- const entered=prompt("Local demo admin passphrase (not secure):");
- if(entered===null)return;
- if(entered!==DEMO_ADMIN_PASSPHRASE){alert("Incorrect demo passphrase.");return;}
- renderAdmin();
- document.getElementById("adminPanel").classList.remove("hidden");
- document.getElementById("adminPanel").scrollIntoView({behavior:"smooth"});
-}
-function renderAdmin(){
- const tbody=document.getElementById("adminTableBody");tbody.replaceChildren();
- registrations.forEach(r=>{
-  const tr=document.createElement("tr");
-  [r.name,r.phone,r.txid,r.passkey].forEach(v=>{const td=document.createElement("td");td.className="p-2 border-b border-pink-400/10";td.textContent=v;tr.appendChild(td);});
-  tbody.appendChild(tr);
- });
- document.getElementById("regCount").textContent="Local records: "+registrations.length;
-}
-function closeAdmin(){document.getElementById("adminPanel").classList.add("hidden");}
-function clearDatabase(){
- if(!confirm("Delete all demo registrations stored in this browser?"))return;
- registrations=[];localStorage.removeItem(STORAGE_KEY);renderAdmin();
-}
-function startExam(){
- const key=document.getElementById("loginPasskey").value.trim().toUpperCase();
- const found=registrations.some(r=>r.passkey===key);
- document.getElementById("loginError").textContent="";
- if(!found){document.getElementById("loginError").textContent="Passkey not found in this browser. Register here first.";return;}
- document.getElementById("examLogin").classList.add("hidden");
- document.getElementById("examSubmitted").classList.add("hidden");
- document.getElementById("activeExam").classList.remove("hidden");
- currentIndex=0;answers={};secondsLeft=90*60;examFinished=false;
- renderQuestion();updateTimer();clearInterval(timerHandle);timerHandle=setInterval(updateTimer,1000);
-}
-function updateTimer(){
- if(examFinished)return;
- const m=Math.floor(secondsLeft/60),s=secondsLeft%60;
- document.getElementById("examTimer").textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
- if(secondsLeft<=0){submitExam();return;}
- secondsLeft--;
-}
-function renderQuestion(){
- const q=questions[currentIndex];
- document.getElementById("questionProgress").textContent=`Question ${currentIndex+1} of ${questions.length}`;
- document.getElementById("categoryTag").textContent=q.section;
- document.getElementById("questionText").textContent=q.q;
- const container=document.getElementById("optionsContainer");container.replaceChildren();
- q.options.forEach((option,i)=>{
-  const label=document.createElement("label");label.className="option";
-  const input=document.createElement("input");input.type="radio";input.name="answer";input.value=i;input.checked=answers[currentIndex]===i;
-  input.addEventListener("change",()=>{answers[currentIndex]=i;});
-  const span=document.createElement("span");span.textContent=option;
-  label.append(input,span);container.appendChild(label);
- });
- document.getElementById("prevBtn").disabled=currentIndex===0;
- document.getElementById("nextBtn").classList.toggle("hidden",currentIndex===questions.length-1);
- document.getElementById("submitBtn").classList.toggle("hidden",currentIndex!==questions.length-1);
- document.getElementById("examNotice").textContent=`Answered ${Object.keys(answers).length} of ${questions.length}`;
-}
-function navigateQuestion(delta){
- const next=currentIndex+delta;
- if(next<0||next>=questions.length)return;
- currentIndex=next;renderQuestion();
-}
-function submitExam(){
- if(examFinished)return;
- if(!confirm("Submit this demo exam now?"))return;
- examFinished=true;clearInterval(timerHandle);
- const score=questions.reduce((total,q,i)=>total+(answers[i]===q.answer?1:0),0);
- document.getElementById("activeExam").classList.add("hidden");
- document.getElementById("examSubmitted").classList.remove("hidden");
- document.getElementById("scoreText").textContent=`Demo score: ${score} / ${questions.length}`;
-}
-document.addEventListener("visibilitychange",()=>{
- if(document.hidden&&!document.getElementById("activeExam").classList.contains("hidden")){
-  document.getElementById("examNotice").textContent="Note: This browser tab became hidden. This demo does not enforce proctoring.";
- }
+document.getElementById("loginForm").addEventListener("submit", async (e)=>{
+ e.preventDefault();
+ try {
+  await auth.signInWithEmailAndPassword(
+   document.getElementById("adminEmail").value.trim(),
+   document.getElementById("adminPassword").value
+  );
+  message("loginMessage","Signed in.");
+  await loadRequests();
+ } catch(err) { message("loginMessage","Sign-in failed: "+err.message,true); }
 });
-const examDate=new Date("2026-10-02T11:00:00+05:00").getTime();
-function updateCountdown(){
- let distance=examDate-Date.now();
- if(distance<=0){["days","hours","minutes","seconds"].forEach(id=>document.getElementById(id).textContent="00");return;}
- const values=[Math.floor(distance/86400000),Math.floor(distance%86400000/3600000),Math.floor(distance%3600000/60000),Math.floor(distance%60000/1000)];
- ["days","hours","minutes","seconds"].forEach((id,i)=>document.getElementById(id).textContent=String(values[i]).padStart(2,"0"));
+document.getElementById("logoutBtn").addEventListener("click", async ()=>{
+ await auth.signOut();
+ document.getElementById("adminArea").classList.add("hidden");
+ message("loginMessage","Signed out.");
+});
+document.getElementById("refreshBtn").addEventListener("click",loadRequests);
+auth.onAuthStateChanged(user=>{
+ if(user) {
+  document.getElementById("adminArea").classList.remove("hidden");
+  document.getElementById("uidInfo").textContent="Signed-in UID (use this in Firestore rules): "+user.uid;
+ } else document.getElementById("adminArea").classList.add("hidden");
+});
+async function loadRequests() {
+ const user=auth.currentUser; if(!user) return;
+ const list=document.getElementById("requestList");
+ list.textContent="Loading…";
+ try {
+  const snap=await db.collection("registrations").orderBy("createdAt","desc").get();
+  list.innerHTML="";
+  if(snap.empty){list.textContent="No registrations yet.";return;}
+  snap.forEach(doc=>{
+   const d=doc.data(), card=document.createElement("article");
+   card.className="rounded-xl border border-pink-400/20 bg-slate-950/60 p-4";
+   const title=document.createElement("div"); title.className="font-bold"; title.textContent=d.name||"(No name)";
+   const detail=document.createElement("p"); detail.className="text-sm text-slate-300 mt-2";
+   detail.textContent="Phone: "+(d.phone||"")+" | Txn ID: "+(d.txid||"")+" | Status: "+(d.status||"pending");
+   card.append(title,detail);
+   if(d.status==="pending"){
+    const row=document.createElement("div"); row.className="flex gap-2 mt-3";
+    for(const status of ["approved","rejected"]){
+     const b=document.createElement("button"); b.className="btn text-sm "+(status==="approved"?"green":"border border-rose-400/50");
+     b.textContent=status==="approved"?"Approve":"Reject";
+     b.addEventListener("click",async()=>{
+      b.disabled=true;
+      try { await doc.ref.update({status, reviewedAt:firebase.firestore.FieldValue.serverTimestamp()}); await loadRequests(); }
+      catch(err){ alert("Update failed: "+err.message); b.disabled=false; }
+     });
+     row.appendChild(b);
+    }
+    card.appendChild(row);
+   }
+   list.appendChild(card);
+  });
+ } catch(err) {
+  list.textContent="Could not load requests: "+err.message;
+ }
 }
-updateCountdown();setInterval(updateCountdown,1000);
 </script>
 </body>
 </html>
