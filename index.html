@@ -245,7 +245,7 @@ const SAMPLE_QUESTIONS = [
  {question:"Karoonjhar Mountains are located near which area?",options:["Nagarparkar","Hunza","Swat","Ziarat"],answer:0},
  {question:"What is the capital of Sindh province?",options:["Hyderabad","Sukkur","Karachi","Larkana"],answer:2}
 ];
-let examQuestions=[], currentIndex=0, answers={}, timerHandle=null, secondsLeft=100*60, examFinished=false, focusWarnings=0;
+let examQuestions=[], currentIndex=0, answers={}, timerHandle=null, secondsLeft=100*60, examFinished=false, focusWarnings=0, activePasskey="";
 
 function showTab(tab){
  ["register","exam","admin"].forEach(name=>document.getElementById("tab-"+name).classList.toggle("hidden",name!==tab));
@@ -433,7 +433,7 @@ function renderQuestion(){
  });
  document.getElementById("prevBtn").disabled=currentIndex===0;
  document.getElementById("nextBtn").classList.toggle("hidden",currentIndex===examQuestions.length-1);
- document.getElementById("submitBtn").classList.toggle("hidden",currentIndex!==examQuestions.length-1);
+ document.getElementById("finishExamBtn").classList.toggle("hidden",currentIndex!==examQuestions.length-1);
  document.getElementById("examNotice").textContent=`Answered ${Object.keys(answers).length} of ${examQuestions.length}`;
 }
 function updateTimer(){
