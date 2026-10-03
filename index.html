@@ -60,7 +60,7 @@ body:before{content:"";position:fixed;inset:-30%;z-index:-1;pointer-events:none;
    <div><div class="font-black tracking-wide gradient">KAROONJHAR TESTING SERVICE</div><div class="text-xs text-pink-200">Sindh University Entry Mock Test 2026</div></div>
   </div>
   <nav class="flex flex-wrap gap-2" aria-label="Main navigation">
-   <button class="btn pink text-sm" onclick="showTab('register')"><i class="fa-solid fa-user-plus mr-1"></i> Register</button>
+   <button class="btn pink text-sm" onclick="showTab('register')"><i class="fa-solid fa-user-xmark mr-1"></i> Registration Closed</button>
    <button class="btn cyan text-sm" onclick="showTab('exam')"><i class="fa-solid fa-file-pen mr-1"></i> Practice Exam</button>
    <button class="btn text-sm border border-pink-400/50 text-pink-200" onclick="showTab('admin')"><i class="fa-solid fa-lock mr-1"></i> Organizer</button>
   </nav>
@@ -69,41 +69,40 @@ body:before{content:"";position:fixed;inset:-30%;z-index:-1;pointer-events:none;
 
 <main class="max-w-6xl mx-auto p-4 space-y-7">
  <section class="card p-6 md:p-9 text-center reveal pulse-glow">
-  <p class="text-pink-300 text-xs uppercase tracking-widest font-bold mb-3">Official KTS Mock Examination</p>
+  <p class="text-emerald-400 text-xs uppercase tracking-widest font-bold mb-3"><i class="fa-solid fa-circle-check mr-1"></i> Exam Conducted Successfully</p>
   <h1 class="text-3xl md:text-5xl font-black mb-3 gradient">SINDH UNIVERSITY MOCK TEST</h1>
   <p class="font-bold mb-6 text-purple-200">Learn, Prepare, Succeed • Own Your Future</p>
   <a class="btn group-cta mb-5" href="https://chat.whatsapp.com/IwYFilxURxk8kbjKyPgFra" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp text-xl"></i> JOIN KTS WHATSAPP GROUP <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></a>
-  <p class="text-xs text-emerald-200 mb-4">Join for KTS announcements and updates</p>
-  <p class="text-sm muted mb-4">Scheduled: <strong class="text-pink-300">02 October 2026, 11:00 AM Pakistan time</strong></p>
-  <div id="countdown" class="grid grid-cols-4 gap-2 max-w-lg mx-auto mb-6">
-   <div class="bg-slate-950 p-3 rounded-xl"><b id="days" class="text-2xl text-pink-300">--</b><div class="text-xs">Days</div></div>
-   <div class="bg-slate-950 p-3 rounded-xl"><b id="hours" class="text-2xl text-purple-300">--</b><div class="text-xs">Hours</div></div>
-   <div class="bg-slate-950 p-3 rounded-xl"><b id="minutes" class="text-2xl text-cyan-300">--</b><div class="text-xs">Minutes</div></div>
-   <div class="bg-slate-950 p-3 rounded-xl"><b id="seconds" class="text-2xl text-emerald-300">--</b><div class="text-xs">Seconds</div></div>
+  <p class="text-xs text-emerald-200 mb-4">Join for key updates and announcement of results</p>
+  <div class="p-4 bg-emerald-950/60 border border-emerald-400/40 rounded-xl max-w-xl mx-auto mb-6">
+   <strong class="text-emerald-300 text-lg block mb-1">Notice: Test Completed</strong>
+   <p class="text-sm text-slate-200">The KTS Sindh University Mock Test 2026 has concluded. Registrations are currently closed and no new submissions are accepted.</p>
   </div>
   <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-left">
-   <div class="bg-slate-950/70 rounded-xl p-3"><small class="text-pink-300">Question bank</small><div class="font-bold">Up to 100 MCQs</div></div>
-   <div class="bg-slate-950/70 rounded-xl p-3"><small class="text-purple-300">Practice duration</small><div class="font-bold">100 minutes</div></div>
-   <div class="bg-slate-950/70 rounded-xl p-3"><small class="text-cyan-300">Registration fee</small><div class="font-bold">Rs. 200/-</div></div>
-   <div class="bg-slate-950/70 rounded-xl p-3"><small class="text-emerald-300">Payment</small><div class="font-bold">Easypaisa</div></div>
+   <div class="bg-slate-950/70 rounded-xl p-3"><small class="text-pink-300">Status</small><div class="font-bold text-emerald-400">Completed</div></div>
+   <div class="bg-slate-950/70 rounded-xl p-3"><small class="text-purple-300">Practice Mode</small><div class="font-bold">Available</div></div>
+   <div class="bg-slate-950/70 rounded-xl p-3"><small class="text-cyan-300">Registration</small><div class="font-bold text-rose-400">Closed</div></div>
+   <div class="bg-slate-950/70 rounded-xl p-3"><small class="text-emerald-300">Platform</small><div class="font-bold">KTS Portal</div></div>
   </div>
  </section>
 
  <section id="tab-register" class="grid md:grid-cols-2 gap-6">
-  <div class="card p-6 reveal">
-   <h2 class="text-xl font-bold text-pink-300 mb-4"><i class="fa-solid fa-user-pen mr-2"></i>Student Registration</h2>
-   <p class="text-sm muted mb-4">Submit your details and transaction ID. Registration remains pending until the organizer reviews it. Never enter your PIN, password, or OTP.</p>
-   <form id="regForm" class="space-y-4">
-    <label class="block text-sm">Full name *<input id="studentName" class="field mt-1" required maxlength="100" autocomplete="name" placeholder="Enter full name"></label>
-    <label class="block text-sm">WhatsApp number *<input id="studentPhone" class="field mt-1" required type="tel" maxlength="20" autocomplete="tel" placeholder="03XXXXXXXXX"></label>
-    <label class="block text-sm">Easypaisa TxID *<input id="studentTxID" class="field mt-1" required maxlength="100" placeholder="Enter transaction ID"></label>
-    <div class="rounded-xl bg-emerald-950/50 border border-emerald-400/30 p-4 text-sm">
-     <strong class="text-emerald-300">Payment instructions</strong><p><b>Account:</b> 03403346415<br><b>Title:</b> Eshwar<br><b>Amount:</b> Rs. 200/-<br>Send the exact amount via Easypaisa, then enter your transaction ID below. Never share your PIN or OTP.</p>
-    </div>
-    <button class="btn pink w-full" id="registerSubmitBtn" type="submit">Submit Registration</button>
+  <div class="card p-6 reveal border-rose-500/40">
+   <div class="flex items-center gap-2 text-rose-400 mb-3"><i class="fa-solid fa-triangle-exclamation text-xl"></i><h2 class="text-xl font-bold">Registration Closed</h2></div>
+   <p class="text-sm text-slate-300 mb-4">The test session has been completed successfully. New registrations and payments are no longer being accepted.</p>
+   
+   <form id="regForm" class="space-y-4 opacity-60">
+    <label class="block text-sm">Full name *<input id="studentName" class="field mt-1" disabled placeholder="Registration closed"></label>
+    <label class="block text-sm">WhatsApp number *<input id="studentPhone" class="field mt-1" disabled placeholder="Registration closed"></label>
+    <label class="block text-sm">Easypaisa TxID *<input id="studentTxID" class="field mt-1" disabled placeholder="Registration closed"></label>
+    <button class="btn pink w-full" id="registerSubmitBtn" type="submit" disabled><i class="fa-solid fa-ban mr-1"></i> Submissions Closed</button>
    </form>
-   <div id="registrationResult" class="hidden mt-4 rounded-xl border border-emerald-400/40 bg-emerald-950/40 p-4" role="status" aria-live="polite"></div>
+   
+   <div id="registrationResult" class="mt-4 rounded-xl border border-rose-500/40 bg-rose-950/50 p-4 text-sm text-rose-200" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-exclamation mr-1"></i> Registration has ended. No new data will be saved.
+   </div>
   </div>
+
   <div class="space-y-6">
    <div class="card p-6 reveal"><h2 class="text-xl font-bold text-purple-300 mb-3">Syllabus Breakdown</h2>
     <ul class="space-y-2 text-sm">
@@ -113,35 +112,27 @@ body:before{content:"";position:fixed;inset:-30%;z-index:-1;pointer-events:none;
      <li class="flex justify-between bg-slate-950/70 p-3 rounded-lg"><span>CURRENT AFFAIRS</span><b>20 MCQs</b></li>
      <li class="flex justify-between bg-slate-950/70 p-3 rounded-lg"><span>IQ VERBAL/NON VERBAL</span><b>10 MCQs</b></li>
     </ul>
-    <p class="text-xs muted mt-3">The syllabus distribution is the intended exam plan. The practice exam loads up to 100 organizer-added questions; sample questions appear if the bank is empty.</p>
    </div>
-   <div class="card p-6 reveal"><h2 class="text-lg font-bold text-cyan-300 mb-2">Contact</h2>
+   <div class="card p-6 reveal"><h2 class="text-lg font-bold text-cyan-300 mb-2">Contact & Queries</h2>
     <p class="text-sm">Organizer: Kelash Ankhia</p><p class="text-sm">Tech Lead: Aneel Kumar</p>
     <p class="text-sm mt-2"><a class="text-emerald-300 underline" href="https://wa.me/923483553420" target="_blank" rel="noopener noreferrer">Technical support on WhatsApp</a></p>
     <p class="text-sm mt-2"><a class="text-emerald-300 underline" href="https://chat.whatsapp.com/IwYFilxURxk8kbjKyPgFra" target="_blank" rel="noopener noreferrer">Join KTS WhatsApp group</a></p>
-   </div>
-   <div class="card p-6 reveal"><h2 class="font-bold text-pink-300 mb-2">Frequently Asked Questions</h2>
-    <p class="font-semibold text-sm">How is registration confirmed?</p><p class="text-sm muted mb-3">The organizer reviews the submitted transaction ID and manually approves or rejects the request.</p>
-    <p class="font-semibold text-sm">Is this a secure official exam?</p><p class="text-sm muted">This site currently provides practice functionality. It does not securely verify payment, restrict exam access to approved students, or store verified exam results.</p>
    </div>
   </div>
  </section>
 
  <section id="tab-exam" class="hidden space-y-5">
   <div id="examLogin" class="card p-6 max-w-2xl mx-auto reveal">
-   <h2 class="text-2xl font-black text-pink-300 mb-2">KTS Practice Exam</h2>
-   <p class="text-sm muted mb-4">Enter the unique passkey issued by the organizer. The exam opens at the scheduled time. This browser-based version is not secure proctoring; answers remain present in question data.</p>
-   <form id="passkeyForm" class="flex flex-col sm:flex-row gap-3"><input id="passkeyInput" class="field flex-1" minlength="8" maxlength="32" autocomplete="off" required placeholder="Enter your approved passkey"><button class="btn pink" id="verifyPasskeyBtn" type="submit">Verify & Start</button></form><p id="passkeyMessage" class="text-sm mt-3" role="status"></p>
+   <h2 class="text-2xl font-black text-pink-300 mb-2">KTS Practice Portal</h2>
+   <p class="text-sm muted mb-4">Enter your passkey to review or attempt practice questions.</p>
+   <form id="passkeyForm" class="flex flex-col sm:flex-row gap-3"><input id="passkeyInput" class="field flex-1" minlength="8" maxlength="32" autocomplete="off" required placeholder="Enter approved passkey"><button class="btn pink" id="verifyPasskeyBtn" type="submit">Verify & Start</button></form><p id="passkeyMessage" class="text-sm mt-3" role="status"></p>
   </div>
   <div id="activeExam" class="hidden card p-5 md:p-8 reveal">
    <div class="flex flex-wrap justify-between gap-3 border-b border-pink-400/20 pb-4 mb-5">
     <div><p class="text-xs text-pink-300">KTS PRACTICE EXAM</p><h2 class="text-xl font-bold">Mock Test</h2></div>
     <div class="text-right"><p class="text-xs muted">Time remaining</p><strong id="examTimer" class="text-2xl text-pink-300">100:00</strong></div>
    </div>
-   <div class="rounded-xl border border-amber-300/40 bg-amber-400/10 p-3 mb-5 text-sm">
-    <strong class="text-amber-200">Exam integrity reminder:</strong> Do not switch tabs, search for answers, screenshot, or ask others for help during this practice test. Tab switching is detected and warned, but this is a practice-only deterrent—not secure proctoring. Never use this version for high-stakes results.
-    <p id="integrityNotice" class="text-xs text-amber-100 mt-2" aria-live="polite">Focus warnings: 0</p>
-   </div>
+   <div id="integrityNotice" class="hidden"></div>
    <div class="flex justify-between gap-2 text-sm mb-4"><b id="questionProgress">Question 1</b><span id="categoryTag" class="text-cyan-300">Practice</span></div>
    <div id="questionText" class="text-lg font-semibold mb-5 question-enter"></div>
    <div id="optionsContainer" class="space-y-3"></div>
@@ -155,7 +146,6 @@ body:before{content:"";position:fixed;inset:-30%;z-index:-1;pointer-events:none;
   <div id="examSubmitted" class="hidden card p-8 text-center max-w-lg mx-auto reveal">
    <h2 class="text-2xl font-black text-emerald-300">Practice completed</h2>
    <p id="scoreText" class="my-3"></p>
-   <p class="text-sm muted">Your score is submitted to the organizer dashboard when the connection and Firestore permissions allow it.</p>
    <button class="btn pink mt-4" onclick="showTab('register')">Back to KTS home</button>
   </div>
  </section>
@@ -163,7 +153,7 @@ body:before{content:"";position:fixed;inset:-30%;z-index:-1;pointer-events:none;
  <section id="tab-admin" class="hidden space-y-5">
   <div class="card p-6 max-w-3xl mx-auto reveal">
    <h2 class="text-2xl font-black text-pink-300 mb-2"><i class="fa-solid fa-shield-halved mr-2"></i>Organizer Portal</h2>
-   <p class="text-sm muted mb-4">Sign in with the organizer account. Management controls appear only after the authorized organizer account is verified.</p>
+   <p class="text-sm muted mb-4">Sign in with authorized organizer credentials.</p>
    <form id="loginForm" class="space-y-3">
     <input class="field" id="adminEmail" type="email" autocomplete="username" placeholder="Organizer email" required>
     <input class="field" id="adminPassword" type="password" autocomplete="current-password" placeholder="Password" required>
@@ -171,48 +161,14 @@ body:before{content:"";position:fixed;inset:-30%;z-index:-1;pointer-events:none;
    </form>
    <p id="loginMessage" class="mt-3 text-sm" role="status"></p>
    <div id="adminArea" class="hidden mt-6">
-    <div class="rounded-xl border border-emerald-300/30 bg-emerald-400/5 p-4 mb-5">
-     <h3 class="font-bold text-emerald-200 mb-1">Organizer controls unlocked</h3>
-     <p class="text-xs muted">Only the Firebase account with the authorized organizer UID can use these tools. Firestore rules must also enforce this access.</p>
-     <div class="flex flex-wrap gap-2 mt-3">
-      <button type="button" class="btn pink text-sm" onclick="document.getElementById('questionForm').scrollIntoView({behavior:'smooth',block:'start'})">＋ Add a Question</button>
-      <button type="button" class="btn cyan text-sm" onclick="document.getElementById('csvUploadPanel').scrollIntoView({behavior:'smooth',block:'center'})">⇧ Upload Questions</button>
-      <button type="button" class="btn cyan text-sm" onclick="document.getElementById('registrationPanel').scrollIntoView({behavior:'smooth',block:'start'})">Registration Requests</button>
-     </div>
-    </div>
     <div class="flex flex-wrap justify-between items-center gap-3 mb-4">
      <div><h3 class="text-xl font-bold">Organizer Dashboard</h3><p id="uidInfo" class="text-xs text-slate-400 break-all"></p></div>
      <button id="logoutBtn" class="btn border border-pink-400/50 text-pink-200">Sign out</button>
     </div>
-    <div id="scorePanel" class="card p-4 mb-6"><div class="flex justify-between items-center gap-3 mb-3"><h3 class="font-bold text-lg">Submitted Exam Scores</h3><button id="refreshScoresBtn" class="btn cyan text-sm" type="button">Refresh Scores</button></div><p class="text-xs muted mb-3">Scores submitted by students, identified by passkey.</p><div id="scoreList" class="space-y-2"></div></div>
+    <div id="scorePanel" class="card p-4 mb-6"><div class="flex justify-between items-center gap-3 mb-3"><h3 class="font-bold text-lg">Submitted Scores</h3><button id="refreshScoresBtn" class="btn cyan text-sm" type="button">Refresh Scores</button></div><div id="scoreList" class="space-y-2"></div></div>
     <div id="registrationPanel" class="card p-4 mb-6">
-     <div class="flex flex-wrap justify-between items-center gap-3 mb-3"><h3 class="font-bold text-lg">Registration requests</h3><button id="refreshBtn" class="btn cyan text-sm">Refresh</button></div>
+     <div class="flex flex-wrap justify-between items-center gap-3 mb-3"><h3 class="font-bold text-lg">Registration History</h3><button id="refreshBtn" class="btn cyan text-sm">Refresh</button></div>
      <div id="requestList" class="space-y-3"></div>
-    </div>
-    <div class="card p-4">
-     <h3 class="font-bold text-lg mb-2">Question Bank Editor</h3>
-     <p class="text-xs text-amber-200 mb-4">Add, edit, or delete up to 100 practice questions. The answer key is visible to visitors in this practice version.</p>
-     <form id="questionForm" class="space-y-3 rounded-xl border border-pink-400/20 p-4">
-      <input id="questionId" type="hidden">
-      <label class="block text-sm">Question<textarea id="questionTextInput" class="field mt-1" rows="3" maxlength="1000" required></textarea></label>
-      <label class="block text-sm">Four options (one per line)<textarea id="questionOptions" class="field mt-1" rows="5" required placeholder="Option A&#10;Option B&#10;Option C&#10;Option D"></textarea></label>
-      <label class="block text-sm">Correct option<select id="questionAnswer" class="field mt-1"><option value="0">Option A</option><option value="1">Option B</option><option value="2">Option C</option><option value="3">Option D</option></select></label>
-      <div class="flex flex-wrap gap-2"><button id="saveQuestionBtn" class="btn pink" type="submit">Save Question</button><button id="cancelQuestionBtn" class="btn border border-pink-400/40" type="button">Clear Form</button></div>
-      <p id="questionMessage" class="text-sm" role="status"></p>
-     </form>
-     <div id="csvUploadPanel" class="mt-5 rounded-xl border border-cyan-300/30 bg-cyan-400/5 p-4">
-      <h4 class="font-bold text-cyan-200 mb-1">✨ Upload questions in bulk (CSV)</h4>
-      <p class="text-xs muted mb-3">Use columns: question, optionA, optionB, optionC, optionD, answer. Answer can be A/B/C/D or 1/2/3/4. Maximum 100 questions total.</p>
-      <div class="flex flex-wrap gap-2 items-center">
-       <input id="questionCsvFile" type="file" accept=".csv,text/csv" class="field flex-1 min-w-0" aria-label="Choose questions CSV file">
-       <button id="downloadCsvTemplate" type="button" class="btn cyan">Get CSV Template</button>
-       <button id="importCsvBtn" type="button" class="btn pink">Upload Questions</button>
-      </div>
-      <p id="csvImportMessage" class="text-sm mt-3" role="status" aria-live="polite"></p>
-     </div>
-     <div class="flex justify-between items-center mt-4 gap-3"><h4 class="font-semibold">Saved questions</h4><button id="refreshQuestionsBtn" class="btn cyan text-sm" type="button">Refresh</button></div>
-     <p id="questionCount" class="text-sm muted mt-2"></p>
-     <div id="questionList" class="space-y-3 mt-3"></div>
     </div>
    </div>
   </div>
@@ -237,15 +193,8 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
-const SAMPLE_QUESTIONS = [
- {question:"Select the correct synonym for “Resilient”:",options:["Fragile","Tough","Weak","Hesitant"],answer:1},
- {question:"Choose the grammatically correct sentence:",options:["She don't like tea.","She doesn't likes tea.","She doesn't like tea.","She do not like tea."],answer:2},
- {question:"If 2x + 6 = 14, what is x?",options:["2","3","4","5"],answer:2},
- {question:"Which component is commonly called the brain of a computer?",options:["RAM","Hard disk","CPU","Keyboard"],answer:2},
- {question:"Karoonjhar Mountains are located near which area?",options:["Nagarparkar","Hunza","Swat","Ziarat"],answer:0},
- {question:"What is the capital of Sindh province?",options:["Hyderabad","Sukkur","Karachi","Larkana"],answer:2}
-];
-let examQuestions=[], currentIndex=0, answers={}, timerHandle=null, secondsLeft=100*60, examFinished=false, focusWarnings=0, activePasskey="";
+
+let examQuestions=[], currentIndex=0, answers={}, timerHandle=null, secondsLeft=100*60, examFinished=false, activePasskey="";
 
 function showTab(tab){
  ["register","exam","admin"].forEach(name=>document.getElementById("tab-"+name).classList.toggle("hidden",name!==tab));
@@ -254,19 +203,13 @@ function showTab(tab){
 function setMessage(id,text,error=false){
  const el=document.getElementById(id);el.textContent=text;el.className="mt-3 text-sm "+(error?"text-rose-300":"text-emerald-300");
 }
-document.getElementById("regForm").addEventListener("submit",async function(e){
+
+document.getElementById("regForm").addEventListener("submit", function(e){
  e.preventDefault();
- const btn=document.getElementById("registerSubmitBtn");btn.disabled=true;
- const name=document.getElementById("studentName").value.trim();
- const phone=document.getElementById("studentPhone").value.trim();
- const txid=document.getElementById("studentTxID").value.trim();
- try{
-  await db.collection("registrations").add({name,phone,txid,status:"pending",createdAt:firebase.firestore.FieldValue.serverTimestamp()});
-  const result=document.getElementById("registrationResult");result.classList.remove("hidden");
-  result.textContent="Registration submitted successfully. Your request is pending organizer review. Keep your payment receipt.";
-  this.reset();
- }catch(err){const result=document.getElementById("registrationResult");result.classList.remove("hidden");result.textContent="Could not submit: "+err.message;}
- finally{btn.disabled=false;}
+ alert("Registration is closed. The exam has already been conducted and no new entries will be saved.");
+ const result=document.getElementById("registrationResult");
+ result.classList.remove("hidden");
+ result.textContent="Warning: Registration is closed. Your submission was blocked and not saved.";
 });
 
 document.getElementById("loginForm").addEventListener("submit",async e=>{
@@ -280,146 +223,57 @@ auth.onAuthStateChanged(user=>{
  document.getElementById("adminArea").classList.toggle("hidden",!isOrganizer);
  document.getElementById("loginForm").classList.toggle("hidden",isOrganizer);
  document.getElementById("uidInfo").textContent=isOrganizer?"Organizer account verified.": "";
- if(isOrganizer){setMessage("loginMessage","Signed in. Organizer tools unlocked.");loadRequests();loadQuestions();loadScores();}
+ if(isOrganizer){setMessage("loginMessage","Signed in. Organizer dashboard loaded.");loadRequests();loadScores();}
  else if(user){auth.signOut();setMessage("loginMessage","This account is not authorized as the KTS organizer.",true);}
 });
 document.getElementById("logoutBtn").addEventListener("click",()=>auth.signOut());
 document.getElementById("refreshBtn").addEventListener("click",loadRequests);
 document.getElementById("refreshScoresBtn").addEventListener("click",loadScores);
-async function loadScores(){if(!auth.currentUser||auth.currentUser.uid!==ORGANIZER_UID)return;const list=document.getElementById("scoreList");list.textContent="Loading scores…";try{const snap=await db.collection("examResults").orderBy("submittedAt","desc").limit(500).get();list.replaceChildren();if(snap.empty){list.textContent="No submitted scores yet.";return;}snap.forEach(doc=>{const r=doc.data(),item=document.createElement("div");item.className="rounded-lg border border-emerald-300/20 p-3 text-sm";item.textContent=`Passkey: ${r.passkey||"—"} | Score: ${r.score}/${r.total} | Submitted: ${r.submittedAt?.toDate?.().toLocaleString?.()||"time pending"}`;list.appendChild(item);});}catch(err){list.textContent="Could not load scores: "+err.message+". Check Firestore rules for examResults.";}}
+
+async function loadScores(){
+ if(!auth.currentUser||auth.currentUser.uid!==ORGANIZER_UID)return;
+ const list=document.getElementById("scoreList");list.textContent="Loading scores…";
+ try{
+  const snap=await db.collection("examResults").orderBy("submittedAt","desc").limit(500).get();
+  list.replaceChildren();
+  if(snap.empty){list.textContent="No submitted scores yet.";return;}
+  snap.forEach(doc=>{
+   const r=doc.data(),item=document.createElement("div");
+   item.className="rounded-lg border border-emerald-300/20 p-3 text-sm";
+   item.textContent=`Passkey: ${r.passkey||"—"} | Score: ${r.score}/${r.total} | Submitted: ${r.submittedAt?.toDate?.().toLocaleString?.()||"time pending"}`;
+   list.appendChild(item);
+  });
+ }catch(err){list.textContent="Could not load scores: "+err.message;}
+}
+
 async function loadRequests(){
  if(!auth.currentUser||auth.currentUser.uid!==ORGANIZER_UID)return;
  const list=document.getElementById("requestList");list.textContent="Loading registration requests…";
  try{
   const snap=await db.collection("registrations").orderBy("createdAt","desc").limit(200).get();
   list.replaceChildren();
-  if(snap.empty){list.textContent="No registration requests yet.";return;}
+  if(snap.empty){list.textContent="No registration records.";return;}
   snap.forEach(doc=>{
    const r=doc.data(),card=document.createElement("div");card.className="rounded-xl border border-pink-400/20 bg-slate-950/60 p-3";
    const details=document.createElement("div");details.className="text-sm break-words";
    details.textContent=`${r.name||"—"} | ${r.phone||"—"} | TxID: ${r.txid||"—"} | Status: ${r.status||"pending"}${r.passkey?` | Passkey: ${r.passkey}`:""}`;
    card.appendChild(details);
-   const actions=document.createElement("div");actions.className="flex gap-2 mt-3";
-   ["approved","rejected"].forEach(status=>{
-    const b=document.createElement("button");b.className="btn text-sm "+(status==="approved"?"green":"border border-rose-400/40 text-rose-200");b.textContent=status==="approved"?"Approve + Issue Passkey":"Reject";
-    b.addEventListener("click",async()=>{b.disabled=true;try{
-      if(status==="approved"){
-       const bytes=crypto.getRandomValues(new Uint8Array(8));const key=Array.from(bytes).map(x=>x.toString(16).padStart(2,"0")).join("").toUpperCase();
-       await db.collection("examPasskeys").doc(key).set({registrationId:doc.id,used:false,revoked:false,createdAt:firebase.firestore.FieldValue.serverTimestamp(),usedAt:null});
-       await doc.ref.update({status,reviewedAt:firebase.firestore.FieldValue.serverTimestamp(),passkey:key});
-       alert("Registration approved. Send this passkey privately to the student: "+key);
-      } else { await doc.ref.update({status,reviewedAt:firebase.firestore.FieldValue.serverTimestamp()}); }
-      await loadRequests();
-     }catch(err){alert("Update failed: "+err.message);b.disabled=false;}});
-    actions.appendChild(b);
-   });
-   card.appendChild(actions);list.appendChild(card);
+   list.appendChild(card);
   });
  }catch(err){list.textContent="Could not load registrations: "+err.message;}
-}
-
-function clearQuestionForm(){
- document.getElementById("questionForm").reset();document.getElementById("questionId").value="";
- document.getElementById("questionMessage").textContent="";document.getElementById("saveQuestionBtn").textContent="Save Question";
-}
-document.getElementById("cancelQuestionBtn").addEventListener("click",clearQuestionForm);
-document.getElementById("refreshQuestionsBtn").addEventListener("click",loadQuestions);
-
-document.getElementById("downloadCsvTemplate").addEventListener("click",()=>{
- const csv='question,optionA,optionB,optionC,optionD,answer\n"What is 2 + 2?",3,4,5,6,B\n';
- const url=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
- const a=document.createElement("a");a.href=url;a.download="KTS_Question_Template.csv";a.click();URL.revokeObjectURL(url);
-});
-function parseCsvRows(text){
- const rows=[];let row=[],cell="",quoted=false;
- for(let i=0;i<text.length;i++){
-  const ch=text[i];
-  if(quoted){if(ch==='"'&&text[i+1]==='"'){cell+='"';i++;}else if(ch==='"')quoted=false;else cell+=ch;}
-  else if(ch==='"')quoted=true;
-  else if(ch===','){row.push(cell.trim());cell="";}
-  else if(ch==='\n'){row.push(cell.trim());if(row.some(v=>v!==""))rows.push(row);row=[];cell="";}
-  else if(ch!=='\r')cell+=ch;
- }
- if(quoted)throw new Error("CSV has an unclosed quotation mark.");
- row.push(cell.trim());if(row.some(v=>v!==""))rows.push(row);return rows;
-}
-document.getElementById("importCsvBtn").addEventListener("click",async()=>{
- const msg=document.getElementById("csvImportMessage"),file=document.getElementById("questionCsvFile").files[0],btn=document.getElementById("importCsvBtn");
- const say=(t,bad=false)=>{msg.textContent=t;msg.className="text-sm mt-3 "+(bad?"text-rose-300":"text-emerald-300");};
- if(!auth.currentUser||auth.currentUser.uid!==ORGANIZER_UID){say("Organizer sign-in required.",true);return;}
- if(!file){say("Choose a CSV file first.",true);return;}
- btn.disabled=true;say("Checking file…");
- try{
-  const rows=parseCsvRows(await file.text());if(rows.length<2)throw new Error("CSV must contain a header and at least one question.");
-  const header=rows.shift().map(x=>x.toLowerCase().replace(/^\uFEFF/,""));
-  const required=["question","optiona","optionb","optionc","optiond","answer"];
-  if(required.some(h=>!header.includes(h)))throw new Error("Missing columns. Download and use the KTS CSV template.");
-  const at=Object.fromEntries(required.map(h=>[h,header.indexOf(h)]));
-  const records=rows.map((r,i)=>{
-   const question=(r[at.question]||"").trim();const options=["optiona","optionb","optionc","optiond"].map(k=>(r[at[k]]||"").trim());
-   let a=(r[at.answer]||"").trim().toUpperCase();if(["1","2","3","4"].includes(a))a=String.fromCharCode(64+Number(a));
-   if(!question||options.some(x=>!x)||!"ABCD".includes(a)||a.length!==1)throw new Error(`Row ${i+2}: provide a question, four options, and answer A/B/C/D (or 1/2/3/4).`);
-   return {question,options,answer:a.charCodeAt(0)-65};
-  });
-  const existing=await db.collection("questions").get();if(existing.size+records.length>100)throw new Error(`Only ${100-existing.size} more question(s) can be added. Current bank: ${existing.size}/100.`);
-  const batch=db.batch();records.forEach(q=>{const ref=db.collection("questions").doc();batch.set(ref,{...q,createdAt:firebase.firestore.FieldValue.serverTimestamp(),updatedAt:firebase.firestore.FieldValue.serverTimestamp()});});
-  await batch.commit();say(`Success! Uploaded ${records.length} question(s).`);document.getElementById("questionCsvFile").value="";await loadQuestions();
- }catch(err){say("Upload failed: "+err.message,true);}finally{btn.disabled=false;}
-});
-document.getElementById("questionForm").addEventListener("submit",async e=>{
- e.preventDefault();
- if(!auth.currentUser||auth.currentUser.uid!==ORGANIZER_UID){setMessage("questionMessage","Organizer sign-in required.",true);return;}
- const question=document.getElementById("questionTextInput").value.trim();
- const options=document.getElementById("questionOptions").value.split("\n").map(x=>x.trim()).filter(Boolean);
- const answer=Number(document.getElementById("questionAnswer").value),id=document.getElementById("questionId").value;
- if(options.length!==4){setMessage("questionMessage","Enter exactly four non-empty options, one per line.",true);return;}
- const btn=document.getElementById("saveQuestionBtn");btn.disabled=true;
- try{
-  const count=await db.collection("questions").get();
-  if(!id&&count.size>=100)throw new Error("Question limit reached (100). Delete one before adding another.");
-  const payload={question,options,answer,updatedAt:firebase.firestore.FieldValue.serverTimestamp()};
-  if(id)await db.collection("questions").doc(id).update(payload);
-  else await db.collection("questions").add({...payload,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
-  setMessage("questionMessage","Question saved.");clearQuestionForm();await loadQuestions();
- }catch(err){setMessage("questionMessage","Save failed: "+err.message,true);}
- finally{btn.disabled=false;}
-});
-async function loadQuestions(){
- if(!auth.currentUser||auth.currentUser.uid!==ORGANIZER_UID)return;
- const list=document.getElementById("questionList");list.textContent="Loading…";
- try{
-  const snap=await db.collection("questions").orderBy("createdAt","asc").limit(100).get();
-  document.getElementById("questionCount").textContent=`${snap.size} of 100 questions saved`;
-  list.replaceChildren();
-  if(snap.empty){list.textContent="No questions saved yet. The practice exam will use sample questions.";return;}
-  snap.forEach(doc=>{
-   const q=doc.data(),card=document.createElement("div");card.className="rounded-xl border border-pink-400/20 bg-slate-950/60 p-3";
-   const title=document.createElement("p");title.className="font-semibold";title.textContent=q.question||"(No question text)";card.appendChild(title);
-   const opts=document.createElement("p");opts.className="text-xs muted mt-2";opts.textContent=(q.options||[]).map((o,i)=>String.fromCharCode(65+i)+". "+o).join("  •  ");card.appendChild(opts);
-   const correct=document.createElement("p");correct.className="text-xs text-emerald-300 mt-1";correct.textContent="Correct option: "+String.fromCharCode(65+(q.answer||0));card.appendChild(correct);
-   const actions=document.createElement("div");actions.className="flex gap-2 mt-3";
-   const edit=document.createElement("button");edit.className="btn cyan text-sm";edit.textContent="Edit";edit.addEventListener("click",()=>{
-    document.getElementById("questionId").value=doc.id;document.getElementById("questionTextInput").value=q.question||"";
-    document.getElementById("questionOptions").value=(q.options||[]).join("\n");document.getElementById("questionAnswer").value=String(q.answer||0);
-    document.getElementById("saveQuestionBtn").textContent="Update Question";document.getElementById("questionForm").scrollIntoView({behavior:"smooth"});
-   });
-   const del=document.createElement("button");del.className="btn border border-rose-400/40 text-rose-200 text-sm";del.textContent="Delete";del.addEventListener("click",async()=>{
-    if(!confirm("Delete this question?"))return;del.disabled=true;try{await doc.ref.delete();await loadQuestions();}catch(err){alert("Delete failed: "+err.message);del.disabled=false;}
-   });
-   actions.append(edit,del);card.appendChild(actions);list.appendChild(card);
-  });
- }catch(err){list.textContent="Could not load questions: "+err.message;}
 }
 
 async function fetchExamQuestions(){
  try{
   const snap=await db.collection("questions").orderBy("createdAt","asc").limit(100).get();
   const list=snap.docs.map(d=>({id:d.id,...d.data()})).filter(q=>q.question&&Array.isArray(q.options)&&q.options.length===4&&Number.isInteger(q.answer));
-  return list.length?list:SAMPLE_QUESTIONS;
- }catch(err){return SAMPLE_QUESTIONS;}
+  return list.length?list:[];
+ }catch(err){return [];}
 }
+
 function renderQuestion(){
  const q=examQuestions[currentIndex];
+ if(!q) return;
  document.getElementById("questionProgress").textContent=`Question ${currentIndex+1} of ${examQuestions.length}`;
  document.getElementById("categoryTag").textContent="Practice MCQ";
  const qText=document.getElementById("questionText");qText.classList.remove("question-enter");void qText.offsetWidth;qText.classList.add("question-enter");qText.textContent=q.question;
@@ -435,58 +289,44 @@ function renderQuestion(){
  document.getElementById("finishExamBtn").classList.toggle("hidden",currentIndex!==examQuestions.length-1);
  document.getElementById("examNotice").textContent=`Answered ${Object.keys(answers).length} of ${examQuestions.length}`;
 }
+
 function updateTimer(){
  if(examFinished)return;
  const m=Math.floor(secondsLeft/60),s=secondsLeft%60;
  document.getElementById("examTimer").textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
  if(secondsLeft<=0){finishExam(true);return;}secondsLeft--;
 }
+
 async function startExam(){
- examQuestions=await fetchExamQuestions();currentIndex=0;answers={};secondsLeft=100*60;examFinished=false;focusWarnings=0;
- document.getElementById("integrityNotice").textContent="Focus warnings: 0";
+ examQuestions=await fetchExamQuestions();
+ if(!examQuestions.length){ alert("No exam questions available."); return; }
+ currentIndex=0;answers={};secondsLeft=100*60;examFinished=false;
  document.getElementById("examLogin").classList.add("hidden");document.getElementById("examSubmitted").classList.add("hidden");
  document.getElementById("activeExam").classList.remove("hidden");renderQuestion();updateTimer();
  clearInterval(timerHandle);timerHandle=setInterval(updateTimer,1000);
 }
-document.addEventListener("visibilitychange",()=>{
- if(document.visibilityState==="hidden" && !examFinished && !document.getElementById("activeExam").classList.contains("hidden")){
-  focusWarnings++;
-  const note=document.getElementById("integrityNotice");
-  note.textContent=`Focus warning ${focusWarnings}: please return to the exam and avoid switching tabs.`;
- }
-});
 
 function finishExam(auto=false){
  if(examFinished)return;
- if(!auto&&!confirm("Finish this practice exam now?"))return;
+ if(!auto&&!confirm("Finish practice exam now?"))return;
  examFinished=true;clearInterval(timerHandle);
  const score=examQuestions.reduce((total,q,i)=>total+(answers[i]===q.answer?1:0),0);
  document.getElementById("activeExam").classList.add("hidden");document.getElementById("examSubmitted").classList.remove("hidden");
  document.getElementById("scoreText").textContent=`${auto?"Time is up. ":""}Score: ${score} / ${examQuestions.length}`;
- db.collection("examResults").add({passkey:activePasskey,score,total:examQuestions.length,submittedAt:firebase.firestore.FieldValue.serverTimestamp()}).then(()=>{document.getElementById("scoreText").textContent+= " — submission recorded.";}).catch(err=>{document.getElementById("scoreText").textContent+=" — score could not be saved; contact organizer.";console.error("Score save failed",err);});
 }
+
 document.getElementById("passkeyForm").addEventListener("submit",async e=>{
  e.preventDefault();const key=document.getElementById("passkeyInput").value.trim().toUpperCase(),msg=document.getElementById("passkeyMessage"),btn=document.getElementById("verifyPasskeyBtn");btn.disabled=true;
  try{
   const ref=db.collection("examPasskeys").doc(key),snap=await ref.get();
-  if(!snap.exists||snap.data().used||snap.data().revoked)throw new Error("Invalid, already-used, or revoked passkey.");
-  await ref.update({used:true,usedAt:firebase.firestore.FieldValue.serverTimestamp()});
-  activePasskey=key;msg.textContent="Passkey accepted. Starting exam…";await startExam();
+  if(!snap.exists||snap.data().revoked)throw new Error("Invalid or revoked passkey.");
+  activePasskey=key;msg.textContent="Passkey accepted. Loading exam…";await startExam();
  }catch(err){msg.textContent="Unable to start: "+err.message;}finally{btn.disabled=false;}
 });
+
 document.getElementById("prevBtn").addEventListener("click",()=>{if(currentIndex>0){currentIndex--;renderQuestion();}});
 document.getElementById("nextBtn").addEventListener("click",()=>{if(currentIndex<examQuestions.length-1){currentIndex++;renderQuestion();}});
 document.getElementById("finishExamBtn").addEventListener("click",()=>finishExam(false));
-document.addEventListener("visibilitychange",()=>{if(document.hidden&&!document.getElementById("activeExam").classList.contains("hidden"))document.getElementById("examNotice").textContent="Practice mode does not enforce proctoring."});
-
-const examDate=new Date("2026-10-02T11:00:00+05:00").getTime();
-function updateCountdown(){
- const distance=examDate-Date.now();
- if(distance<=0){["days","hours","minutes","seconds"].forEach(id=>document.getElementById(id).textContent="00");return;}
- const values=[Math.floor(distance/86400000),Math.floor(distance%86400000/3600000),Math.floor(distance%3600000/60000),Math.floor(distance%60000/1000)];
- ["days","hours","minutes","seconds"].forEach((id,i)=>document.getElementById(id).textContent=String(values[i]).padStart(2,"0"));
-}
-updateCountdown();setInterval(updateCountdown,1000);
 </script>
 <script>
 document.addEventListener('click', function(ev){
@@ -497,7 +337,6 @@ document.addEventListener('click', function(ev){
  dot.style.left=(ev.clientX-r.left-size/2)+'px'; dot.style.top=(ev.clientY-r.top-size/2)+'px';
  el.appendChild(dot); setTimeout(()=>dot.remove(),700);
 });
-try { const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}}),{threshold:.08}); document.querySelectorAll('.card').forEach(el=>io.observe(el)); } catch(e) {}
 </script>
 </body>
 </html>
